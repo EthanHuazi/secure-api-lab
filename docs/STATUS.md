@@ -32,10 +32,10 @@ Do not display `.env`, real passwords, GitHub tokens or bearer tokens in screens
 
 ## Required user actions
 
-- **Request a free NVD API key** at https://nvd.nist.gov/developers/request-an-api-key and supply it as `NVD_API_KEY`. Without it OWASP Dependency-Check aborts with `Invalid API Key` / `No documents exist`, so the mandated SCA report cannot be produced. This is the single remaining blocker for the CI rubric item.
-- Capture genuine screenshots (list above) from your own terminal and the GitHub Actions page, saving them under `evidence/screenshots/`.
-- Provide Variant Number, Student Name (Surname and Name), and HDU Number before a formal report cover is generated. Student ID belongs in the submitted report; do not automatically place it in the public repository.
-- Authorize public repository publication and specify the GitHub account/repository (or provide an existing empty repository URL). The repository has local commits but no remote; nothing has been uploaded. Never paste an access token into chat; authenticate locally or via the connector's authorization UI.
+- **Request a free NVD API key** at https://nvd.nist.gov/developers/request-an-api-key and add it as the repository secret `NVD_API_KEY` (Settings → Secrets and variables → Actions → New repository secret). The workflow now reads it via `env: NVD_API_KEY`. Without it OWASP Dependency-Check aborts with `Invalid API Key` / `No documents exist`, which is why run #1 is red. After adding it, re-run the failed job to obtain a fully green workflow.
+- Capture genuine screenshots (list above) from your own terminal and the Actions page, saving them under `evidence/screenshots/`.
+- ~~Provide Variant Number, Student Name and HDU Number.~~ Supplied: Variant Number not assigned; Hua Yichen; HDU 23320129. These are in the report's title page. The HDU number is deliberately **not** placed in the public README.
+- ~~Authorize public repository publication.~~ Done: published to https://github.com/EthanHuazi/secure-api-lab on 2026-10-19.
 
 ## Remaining execution order
 
@@ -49,6 +49,15 @@ Do not display `.env`, real passwords, GitHub tokens or bearer tokens in screens
 
 ## Submission status
 
-Public repository URL: not available.
-Last successful pipeline URL: not available.
-Final PDF: not generated; identity details and experiment evidence are pending.
+Public repository URL: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19, branch `main`, 106 files).
+
+Pipeline runs (both triggered by push; the repository has now been published and Actions executes automatically):
+
+| Run | Commit | Result |
+|---|---|---|
+| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | `00d88d0` | **Overall: failure.** `tests-and-sast` **passed** (24s, artifact `api-test-and-sast-reports`); `dependency-check` **failed** (11s) — no NVD API key |
+| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | `79ad0c5` | Running at time of writing; expected to fail on `dependency-check` for the same reason |
+
+Last **fully successful** pipeline URL: **not available yet.** The `tests-and-sast` job succeeds, which already satisfies "at least one SAST/SCA tool running", but the workflow is red while Dependency-Check cannot obtain NVD data. Adding the `NVD_API_KEY` repository secret and re-running should make the whole workflow green.
+
+Final PDF: not generated. Cover details are now supplied (Hua Yichen, HDU 23320129, Variant Number not assigned); screenshots are still outstanding, so the report is not yet submission-ready.

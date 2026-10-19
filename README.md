@@ -8,7 +8,7 @@ A Python 3.12 / Flask / SQLite teaching project implementing Work 1 of the HDU I
 
 ## Development Environment
 
-Verified on 2026-10-19: macOS arm64, Python 3.12.15 at `/opt/homebrew/bin/python3.12`, pip 26.2.1, Git 2.50.1, Homebrew 7.0.9, VS Code installed. A project-specific `.venv` is used; system Python was not changed. Docker Desktop 29.8.2 with Docker Compose v5.6.0 is running and produces `linux/arm64` containers; the CVE experiment below was executed against it. No Java runtime is installed, so Dependency-Check was run from its official container instead; that scan is currently blocked by the missing NVD API key (see SCA Results). GitHub publishing has not been authorized or performed, and the repository has local commits but no remote.
+Verified on 2026-10-19: macOS arm64, Python 3.12.15 at `/opt/homebrew/bin/python3.12`, pip 26.2.1, Git 2.50.1, Homebrew 7.0.9, VS Code installed. A project-specific `.venv` is used; system Python was not changed. Docker Desktop 29.8.2 with Docker Compose v5.6.0 is running and produces `linux/arm64` containers; the CVE experiment below was executed against it. Repository: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19). No Java runtime is installed, so Dependency-Check was run from its official container instead; that scan is currently blocked by the missing NVD API key (see SCA Results). GitHub Actions has now executed on the remote repository (see CI/CD Pipeline).
 
 ## Installation
 
@@ -79,6 +79,15 @@ Re-verified on 2026-10-19 during the regression pass: **40 pytest tests passed**
 ## CI/CD Pipeline
 
 [Workflow](.github/workflows/ci.yml) triggers on push and pull_request. One job installs Python dependencies, executes pytest and curl, runs Bandit and supplementary pip-audit. Another installs Java 21 and OWASP Dependency-Check 13.0.0, downloads exact Python dependency distributions, enables experimental Python analyzers and generates HTML/JSON reports. High/critical CVSS findings (>=7) fail Dependency-Check; Bandit and pip-audit also fail on findings. Report upload uses `always()` so failed scans can be investigated. No blanket suppression or continue-on-error is used.
+
+**Actual remote result.** The workflow ran automatically after publishing:
+
+| Run | Commit | Result |
+|---|---|---|
+| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | `00d88d0` | Overall **failure**. `tests-and-sast` **passed** in 24s and produced the `api-test-and-sast-reports` artifact; `dependency-check` **failed** in 11s |
+| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | `79ad0c5` | Triggered after wiring the `NVD_API_KEY` secret; expected to fail on `dependency-check` until the secret is populated |
+
+The `dependency-check` failure is the NVD API-key blocker described under SCA Results, surfaced remotely exactly as it was locally; it is not a code defect and has not been suppressed. The `NVD_API_KEY` repository secret was wired into the workflow so that adding the key is the only remaining step. There is no fully green workflow run yet.
 
 Dependency-Check's Python support is experimental and CPE matching can be incomplete or imprecise. pip-audit supplements ecosystem-specific coverage, but does not replace the manual's mandated scanner. OSS Index is disabled because it requires separate account credentials; the NVD-backed Dependency-Check scan remains enabled. NVD initial download without an API key may be slow or rate-limited. Remote execution must confirm database update, nonempty dependency inventory and actual results; service failures are not clean scans.
 

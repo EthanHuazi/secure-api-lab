@@ -1,6 +1,17 @@
 # Work 1: Secure REST API Development with CI/CD and Real CVE Vulnerability Analysis
 
-**Working draft. No formal title page has been generated. Variant Number, Student Name and HDU Number must be supplied by the student. The CVE experiment has been executed and verified locally; the remote pipeline has not run and the Dependency-Check report is pending an NVD API key.**
+## Title page
+
+| Field | Value |
+|---|---|
+| Laboratory work | Work 1 — Secure REST API Development with CI/CD and Real CVE Vulnerability Analysis |
+| Variant Number | Not assigned |
+| Surname and Name | Hua Yichen |
+| HDU number | 23320129 |
+| Public repository | https://github.com/EthanHuazi/secure-api-lab |
+| Selected vulnerability | CVE-2021-41773 (Apache HTTP Server 2.4.49) |
+
+**Status of this draft:** the API, the security controls and the CVE experiment are executed and verified. The Dependency-Check report is pending an NVD API key, so the `dependency-check` CI job is currently red; the `tests-and-sast` job (pytest, curl, Bandit, pip-audit) passes. Genuine screenshots have not been captured yet.
 
 ## 1. Introduction
 
