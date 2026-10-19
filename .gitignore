@@ -14,5 +14,11 @@ htmlcov/
 .scan-packages/
 .dependency-check-data/
 .cache/
+
+# Local report artifacts. Both carry the student's HDU number, which is kept
+# out of the public repository on purpose. Remove these two lines if you decide
+# the report generator may be published.
+docs/*.pdf
+scripts/build_report.py
 .tools/
 .ci-reports/
