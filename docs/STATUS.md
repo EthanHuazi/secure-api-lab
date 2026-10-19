@@ -49,7 +49,7 @@ Do not display `.env`, real passwords, GitHub tokens or bearer tokens in screens
 
 ## Submission status
 
-Public repository URL: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19, branch `main`, 106 files).
+Public repository URL: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19, branch `main`, 105 tracked files).
 
 Pipeline runs (both triggered by push; the repository has now been published and Actions executes automatically):
 
