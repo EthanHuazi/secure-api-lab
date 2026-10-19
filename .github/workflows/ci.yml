@@ -41,6 +41,12 @@ jobs:
   dependency-check:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    env:
+      # NVD's CVE API requires an API key. Without this repository secret the
+      # scan aborts with "Invalid API Key" / "No documents exist". Request a free
+      # key at https://nvd.nist.gov/developers/request-an-api-key and add it as
+      # the repository secret NVD_API_KEY.
+      NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
