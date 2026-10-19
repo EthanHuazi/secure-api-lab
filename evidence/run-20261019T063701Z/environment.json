@@ -1,0 +1,59 @@
+{
+  "captured_utc": "20261019T063701Z",
+  "host": {
+    "os": "macOS",
+    "architecture": "arm64",
+    "shell": "/bin/zsh"
+  },
+  "python": {
+    "version_in_venv": "3.12.15",
+    "venv_path": ".venv"
+  },
+  "docker": {
+    "cli_version": "29.8.2",
+    "compose_version": "v5.6.0",
+    "server_version": "29.8.2",
+    "server_ostype": "linux",
+    "server_architecture": "aarch64",
+    "engine_running": true
+  },
+  "java_runtime": {
+    "installed": false,
+    "note": "No local JRE/JDK. OWASP Dependency-Check was executed from the official owasp/dependency-check container instead."
+  },
+  "results": {
+    "pytest": "40 passed",
+    "curl_smoke": "6/6 real HTTP checks passed",
+    "bandit": "0 findings on secure_api/",
+    "pip_audit": "10 dependencies scanned, 0 known vulnerabilities",
+    "dependency_check": "NOT PRODUCED - NVD API key missing (Invalid API Key / No documents exist)",
+    "github_actions": "not executed (no remote configured)"
+  },
+  "cve_experiment": {
+    "cve": "CVE-2021-41773",
+    "executed": true,
+    "scope": "file disclosure only, loopback-only local containers, no host mounts, no command execution",
+    "vulnerable": {
+      "apache": "2.4.49",
+      "arch": "aarch64",
+      "port": "127.0.0.1:8080->80",
+      "normal_page": "200 OK",
+      "traversal": "200 OK, 926 bytes, /etc/passwd disclosed",
+      "traversal_42013_variant": "200 OK, 926 bytes, /etc/passwd disclosed"
+    },
+    "fixed": {
+      "apache": "2.4.69",
+      "arch": "aarch64",
+      "port": "127.0.0.1:8081->80",
+      "normal_page": "200 OK (regression passed)",
+      "traversal": "400 Bad Request, no disclosure",
+      "traversal_42013_variant": "400 Bad Request, no disclosure",
+      "error_log": "AH10244: invalid URI path"
+    },
+    "containers_after_run": "all stopped and removed; docker ps -a empty"
+  },
+  "notes": [
+    "Compose files originally used 'networks: lab: internal: true'; Docker does not publish host ports on an internal network, so no host binding existed. Removed; originals preserved in compose-original/.",
+    "This shell exports http_proxy/https_proxy, so all HTTP probes used curl --noproxy '*' to avoid a 502 from the local proxy."
+  ]
+}

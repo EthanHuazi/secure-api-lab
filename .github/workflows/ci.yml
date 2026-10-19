@@ -1,0 +1,80 @@
+name: Secure API CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  tests-and-sast:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      EVIDENCE_DIR: .ci-reports
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pip check
+      - run: mkdir -p .ci-reports
+      - name: Automated tests
+        run: python -m pytest -v --junitxml=.ci-reports/pytest.xml
+      - name: Real HTTP tests with curl
+        run: python scripts/curl_smoke.py
+      - name: Bandit SAST
+        if: ${{ !cancelled() }}
+        run: bandit -r secure_api -f json -o .ci-reports/bandit.json
+      - name: Supplementary Python dependency audit
+        if: ${{ !cancelled() }}
+        run: pip-audit -r requirements.txt -f json -o .ci-reports/pip-audit.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-test-and-sast-reports
+          path: |
+            .ci-reports/pytest.xml
+            .ci-reports/curl.json
+            .ci-reports/bandit.json
+            .ci-reports/pip-audit.json
+  dependency-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Download the exact runtime dependency artifacts
+        run: python -m pip download -r requirements.txt --dest .scan-packages
+      - name: Install OWASP Dependency-Check
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 -o "$RUNNER_TEMP/dc.zip" https://github.com/dependency-check/DependencyCheck/releases/download/v13.0.0/dependency-check-13.0.0-release.zip
+          unzip -q "$RUNNER_TEMP/dc.zip" -d "$RUNNER_TEMP/dc"
+      - uses: actions/cache@v4
+        with:
+          path: .dependency-check-data
+          key: dc-13-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: dc-13-${{ runner.os }}-
+      - name: OWASP Dependency-Check SCA
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/dc/dependency-check/bin/dependency-check.sh" \
+            --project secure-api-lab --scan .scan-packages \
+            --enableExperimental --disableOssIndex \
+            --data .dependency-check-data --out .ci-reports/dependency-check \
+            --format HTML --format JSON --failOnCVSS 7
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: owasp-dependency-check-reports
+          path: .ci-reports/dependency-check/
+          if-no-files-found: warn

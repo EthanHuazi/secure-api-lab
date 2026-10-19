@@ -1,0 +1,2 @@
+ Container work1-resume-vulnerable-apache-1 Stopping 
+ Container work1-resume-vulnerable-apache-1 Stopped 

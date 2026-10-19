@@ -1,0 +1,6 @@
+ Container work1-after-apache-1 Stopping 
+ Container work1-after-apache-1 Stopped 
+ Container work1-after-apache-1 Removing 
+ Container work1-after-apache-1 Removed 
+ Network work1-after_lab Removing 
+ Network work1-after_lab Removed 

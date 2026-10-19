@@ -1,0 +1,454 @@
+[
+  {
+    "name": "git-status",
+    "command": [
+      "git",
+      "status",
+      "--short",
+      "--branch"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "docker-info",
+    "command": [
+      "docker",
+      "info"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "pytest",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-v",
+      "-p",
+      "no:cacheprovider",
+      "--junitxml=/Users/huayichen/\u4e13\u4e1a\u8bfe/Information Security/Labs/secure-api-lab/evidence/resume-20261019T041823Z/pytest.xml"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "pip-check",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pip",
+      "check"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "bandit",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "bandit",
+      "-r",
+      "secure_api",
+      "-f",
+      "json",
+      "-o",
+      "/Users/huayichen/\u4e13\u4e1a\u8bfe/Information Security/Labs/secure-api-lab/evidence/resume-20261019T041823Z/bandit.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "curl-smoke",
+    "command": [
+      ".venv/bin/python",
+      "scripts/curl_smoke.py"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "pip-audit",
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pip_audit",
+      "-r",
+      "requirements.txt",
+      "-f",
+      "json",
+      "-o",
+      "/Users/huayichen/\u4e13\u4e1a\u8bfe/Information Security/Labs/secure-api-lab/evidence/resume-20261019T041823Z/pip-audit.json"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-config",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "config"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-build",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "build"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-up",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "up",
+      "-d"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-ps",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "ps"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-version",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "exec",
+      "-T",
+      "apache",
+      "httpd",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-arch",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "exec",
+      "-T",
+      "apache",
+      "uname",
+      "-m"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-syntax",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "exec",
+      "-T",
+      "apache",
+      "httpd",
+      "-t"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-normal",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8080/"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "vulnerable-traversal",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8080/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "vulnerable-regression",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8080/"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "vulnerable-logs",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "logs",
+      "--no-color"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "vulnerable-stop",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-vulnerable",
+      "-f",
+      "compose.vulnerable.yml",
+      "stop"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-config",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "config"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-build",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "build"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-up",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "up",
+      "-d"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-ps",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "ps"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-version",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "exec",
+      "-T",
+      "apache",
+      "httpd",
+      "-v"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-arch",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "exec",
+      "-T",
+      "apache",
+      "uname",
+      "-m"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-syntax",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "exec",
+      "-T",
+      "apache",
+      "httpd",
+      "-t"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-normal",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8081/"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "fixed-traversal",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8081/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "fixed-regression",
+    "command": [
+      "curl",
+      "--silent",
+      "--show-error",
+      "--path-as-is",
+      "--max-time",
+      "10",
+      "--retry",
+      "3",
+      "--retry-connrefused",
+      "-i",
+      "http://127.0.0.1:8081/"
+    ],
+    "exit_code": 7
+  },
+  {
+    "name": "fixed-logs",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "logs",
+      "--no-color"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "fixed-stop",
+    "command": [
+      "docker",
+      "compose",
+      "-p",
+      "work1-resume-fixed",
+      "-f",
+      "compose.fixed.yml",
+      "stop"
+    ],
+    "exit_code": 0
+  },
+  {
+    "name": "final-containers",
+    "command": [
+      "docker",
+      "ps",
+      "-a"
+    ],
+    "exit_code": 0
+  }
+]

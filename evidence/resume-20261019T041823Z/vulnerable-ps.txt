@@ -1,0 +1,2 @@
+NAME                               IMAGE                            COMMAND              SERVICE   CREATED         STATUS                  PORTS
+work1-resume-vulnerable-apache-1   work1-resume-vulnerable-apache   "httpd-foreground"   apache    3 seconds ago   Up Less than a second   80/tcp

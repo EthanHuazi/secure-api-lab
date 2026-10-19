@@ -1,0 +1,9 @@
+apache-1  | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.18.0.2. Set the 'ServerName' directive globally to suppress this message
+apache-1  | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.18.0.2. Set the 'ServerName' directive globally to suppress this message
+apache-1  | [Mon Oct 19 06:42:29.327392 2026] [mpm_event:notice] [pid 1:tid 1] AH00489: Apache/2.4.69 (Unix) configured -- resuming normal operations
+apache-1  | [Mon Oct 19 06:42:29.327481 2026] [core:notice] [pid 1:tid 1] AH00094: Command line: 'httpd -D FOREGROUND'
+apache-1  | 172.18.0.1 - - [19/Oct/2026:06:42:44 +0000] "GET / HTTP/1.1" 200 191
+apache-1  | 172.18.0.1 - - [19/Oct/2026:06:42:44 +0000] "GET /icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd HTTP/1.1" 400 266
+apache-1  | [Mon Oct 19 06:42:44.709308 2026] [core:error] [pid 13:tid 36] [client 172.18.0.1:58486] AH10244: invalid URI path (/icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd)
+apache-1  | [Mon Oct 19 06:43:03.555238 2026] [core:error] [pid 13:tid 41] [client 172.18.0.1:62546] AH10244: invalid URI path (/icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd)
+apache-1  | 172.18.0.1 - - [19/Oct/2026:06:43:03 +0000] "GET /icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd HTTP/1.1" 400 266

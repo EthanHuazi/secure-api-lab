@@ -1,0 +1,51 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.12.15, pytest-9.1.1, pluggy-1.7.0 -- /Users/huayichen/专业课/Information Security/Labs/secure-api-lab/.venv/bin/python
+rootdir: /Users/huayichen/专业课/Information Security/Labs/secure-api-lab
+configfile: pytest.ini
+testpaths: tests
+plugins: platformdirs-4.13.5
+collecting ... collected 40 items
+
+tests/test_api.py::test_login[login] PASSED                              [  2%]
+tests/test_api.py::test_login[username] PASSED                           [  5%]
+tests/test_api.py::test_failed_login[missing-wrong] PASSED               [  7%]
+tests/test_api.py::test_failed_login[student-wrong] PASSED               [ 10%]
+tests/test_api.py::test_failed_login[' OR 1=1 ---x] PASSED               [ 12%]
+tests/test_api.py::test_failed_login[student' ---x] PASSED               [ 15%]
+tests/test_api.py::test_failed_login[student" OR "1"="1-x] PASSED        [ 17%]
+tests/test_api.py::test_invalid_input[body0] PASSED                      [ 20%]
+tests/test_api.py::test_invalid_input[body1] PASSED                      [ 22%]
+tests/test_api.py::test_invalid_input[body2] PASSED                      [ 25%]
+tests/test_api.py::test_invalid_input[None] PASSED                       [ 27%]
+tests/test_api.py::test_invalid_input[body4] PASSED                      [ 30%]
+tests/test_api.py::test_invalid_input[body5] PASSED                      [ 32%]
+tests/test_api.py::test_invalid_input[body6] PASSED                      [ 35%]
+tests/test_api.py::test_invalid_input[body7] PASSED                      [ 37%]
+tests/test_api.py::test_content_type_and_size PASSED                     [ 40%]
+tests/test_api.py::test_reject_tokens[none-/api/data] PASSED             [ 42%]
+tests/test_api.py::test_reject_tokens[none-/api/profile] PASSED          [ 45%]
+tests/test_api.py::test_reject_tokens[invalid-/api/data] PASSED          [ 47%]
+tests/test_api.py::test_reject_tokens[invalid-/api/profile] PASSED       [ 50%]
+tests/test_api.py::test_reject_tokens[expired-/api/data] PASSED          [ 52%]
+tests/test_api.py::test_reject_tokens[expired-/api/profile] PASSED       [ 55%]
+tests/test_api.py::test_reject_tokens[signature-/api/data] PASSED        [ 57%]
+tests/test_api.py::test_reject_tokens[signature-/api/profile] PASSED     [ 60%]
+tests/test_api.py::test_reject_tokens[algorithm-/api/data] PASSED        [ 62%]
+tests/test_api.py::test_reject_tokens[algorithm-/api/profile] PASSED     [ 65%]
+tests/test_api.py::test_reject_tokens[missing-exp-/api/data] PASSED      [ 67%]
+tests/test_api.py::test_reject_tokens[missing-exp-/api/profile] PASSED   [ 70%]
+tests/test_api.py::test_reject_tokens[audience-/api/data] PASSED         [ 72%]
+tests/test_api.py::test_reject_tokens[audience-/api/profile] PASSED      [ 75%]
+tests/test_api.py::test_reject_tokens[future-/api/data] PASSED           [ 77%]
+tests/test_api.py::test_reject_tokens[future-/api/profile] PASSED        [ 80%]
+tests/test_api.py::test_reject_tokens[deleted-user-/api/data] PASSED     [ 82%]
+tests/test_api.py::test_reject_tokens[deleted-user-/api/profile] PASSED  [ 85%]
+tests/test_api.py::test_reject_tokens[bad-sub-/api/data] PASSED          [ 87%]
+tests/test_api.py::test_reject_tokens[bad-sub-/api/profile] PASSED       [ 90%]
+tests/test_api.py::test_profile_allowlist_and_headers PASSED             [ 92%]
+tests/test_api.py::test_stored_xss_and_parameterized_insert PASSED       [ 95%]
+tests/test_api.py::test_hash_and_idempotence PASSED                      [ 97%]
+tests/test_api.py::test_missing_secret_fails_closed PASSED               [100%]
+
+- generated xml file: /Users/huayichen/专业课/Information Security/Labs/secure-api-lab/evidence/resume-20261019T041823Z/pytest.xml -
+============================== 40 passed in 2.07s ==============================

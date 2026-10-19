@@ -1,0 +1,19 @@
+name: work1-resume-fixed
+services:
+  apache:
+    networks:
+      lab: null
+    platform: linux/arm64
+    build:
+      context: /Users/huayichen/专业课/Information Security/Labs/secure-api-lab/cve/CVE-2021-41773
+      dockerfile: Dockerfile.fixed
+    ports:
+      - mode: ingress
+        host_ip: 127.0.0.1
+        target: 80
+        published: "8081"
+        protocol: tcp
+networks:
+  lab:
+    name: work1-resume-fixed_lab
+    internal: true

@@ -1,0 +1,12 @@
+
+#8 resolving provenance for metadata file
+#8 DONE 0.0s
+ Image work1-after-apache Built 
+ Network work1-after_lab Creating 
+ Network work1-after_lab Creating 
+ Network work1-after_lab Created 
+ Network work1-after_lab Created 
+ Container work1-after-apache-1 Creating 
+ Container work1-after-apache-1 Created 
+ Container work1-after-apache-1 Starting 
+ Container work1-after-apache-1 Started 

@@ -1,0 +1,5 @@
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[json]	INFO	JSON output written to file: /Users/huayichen/专业课/Information Security/Labs/secure-api-lab/evidence/resume-20261019T041823Z/bandit.json

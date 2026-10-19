@@ -1,0 +1,13 @@
+services:
+  apache:
+    build:
+      context: .
+      dockerfile: Dockerfile.vulnerable
+    platform: linux/arm64
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - lab
+networks:
+  lab:
+    internal: true

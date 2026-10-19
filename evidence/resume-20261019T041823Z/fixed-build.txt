@@ -1,0 +1,630 @@
+#1 [internal] load local bake definitions
+#1 reading from stdin 704B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.fixed
+#2 transferring dockerfile: 876B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/httpd:2.4.69
+#3 DONE 2.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.0s
+
+#5 [1/2] FROM docker.io/library/httpd:2.4.69@sha256:c842ac797bd1fe8b3cd26d002ac9d948aa2814097544600600b35aef42e6785a
+#5 resolve docker.io/library/httpd:2.4.69@sha256:c842ac797bd1fe8b3cd26d002ac9d948aa2814097544600600b35aef42e6785a done
+#5 sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 0B / 13.40MB 0.2s
+#5 sha256:16216c3fcaf0a1146348052c3fe06e600e4c4850eda291ffca294aedf6e63e5c 0B / 291B 0.2s
+#5 sha256:902e2a8a7274396f16390d3479d0a37606e234701e7bbc3add8cff33ea3c3842 0B / 1.98MB 0.2s
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 0B / 32B 0.2s
+#5 sha256:16216c3fcaf0a1146348052c3fe06e600e4c4850eda291ffca294aedf6e63e5c 291B / 291B 0.3s done
+#5 sha256:2bfba9b8d1a6542c45fec2ef03a43eef8f472abf8cd52c99005b8e1fd61c48ac 0B / 144B 0.2s
+#5 sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 2.10MB / 13.40MB 1.1s
+#5 sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 4.19MB / 13.40MB 1.2s
+#5 sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 10.49MB / 13.40MB 1.4s
+#5 sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 32B / 32B 1.2s done
+#5 sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 13.40MB / 13.40MB 1.4s done
+#5 sha256:2bfba9b8d1a6542c45fec2ef03a43eef8f472abf8cd52c99005b8e1fd61c48ac 144B / 144B 1.1s done
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 0B / 30.20MB 0.2s
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 3.15MB / 30.20MB 0.5s
+#5 sha256:902e2a8a7274396f16390d3479d0a37606e234701e7bbc3add8cff33ea3c3842 1.05MB / 1.98MB 2.0s
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 10.49MB / 30.20MB 0.6s
+#5 sha256:902e2a8a7274396f16390d3479d0a37606e234701e7bbc3add8cff33ea3c3842 1.98MB / 1.98MB 2.0s done
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 18.87MB / 30.20MB 0.9s
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 27.26MB / 30.20MB 1.1s
+#5 sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 30.20MB / 30.20MB 1.1s done
+#5 extracting sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba
+#5 extracting sha256:bbeda6b4abb749f743f4547ef5a28070a14de8caef211daa5afb78d5b5fa21ba 0.3s done
+#5 DONE 2.7s
+
+#5 [1/2] FROM docker.io/library/httpd:2.4.69@sha256:c842ac797bd1fe8b3cd26d002ac9d948aa2814097544600600b35aef42e6785a
+#5 extracting sha256:2bfba9b8d1a6542c45fec2ef03a43eef8f472abf8cd52c99005b8e1fd61c48ac done
+#5 extracting sha256:4f4fb700ef54461cfa02571ae0db9a0dc1e0cdb5577484a6d75e68dc38e8acc1 done
+#5 extracting sha256:902e2a8a7274396f16390d3479d0a37606e234701e7bbc3add8cff33ea3c3842 0.1s done
+#5 extracting sha256:e71ac08dcbc493bd9ffdd7674287aaa15de1241475e1750f09ff08ea9151dea0 0.1s done
+#5 DONE 2.9s
+
+#5 [1/2] FROM docker.io/library/httpd:2.4.69@sha256:c842ac797bd1fe8b3cd26d002ac9d948aa2814097544600600b35aef42e6785a
+#5 extracting sha256:16216c3fcaf0a1146348052c3fe06e600e4c4850eda291ffca294aedf6e63e5c done
+#5 DONE 2.9s
+
+#6 [2/2] RUN set -ex     && sed -i "s|#LoadModule cgid_module modules/mod_cgid.so|LoadModule cgid_module modules/mod_cgid.so|g" /usr/local/apache2/conf/httpd.conf     && sed -i "s|#LoadModule cgi_module modules/mod_cgi.so|LoadModule cgi_module modules/mod_cgi.so|g" /usr/local/apache2/conf/httpd.conf     && sed -i "s|#Include conf/extra/httpd-autoindex.conf|Include conf/extra/httpd-autoindex.conf|g" /usr/local/apache2/conf/httpd.conf     && cat /usr/local/apache2/conf/httpd.conf         | tr '\n' '\r'         | perl -pe 's|<Directory />.*?</Directory>|<Directory />\n    AllowOverride none\n    Require all granted\n</Directory>|isg'         | tr '\r' '\n'         | tee /tmp/httpd.conf     && mv /tmp/httpd.conf /usr/local/apache2/conf/httpd.conf
+#6 0.058 + sed -i s|#LoadModule cgid_module modules/mod_cgid.so|LoadModule cgid_module modules/mod_cgid.so|g /usr/local/apache2/conf/httpd.conf
+#6 0.059 + sed -i s|#LoadModule cgi_module modules/mod_cgi.so|LoadModule cgi_module modules/mod_cgi.so|g /usr/local/apache2/conf/httpd.conf
+#6 0.060 + sed -i s|#Include conf/extra/httpd-autoindex.conf|Include conf/extra/httpd-autoindex.conf|g /usr/local/apache2/conf/httpd.conf
+#6 0.060 + cat /usr/local/apache2/conf/httpd.conf
+#6 0.060 + tr \n \r
+#6 0.060 + perl -pe s|<Directory />.*?</Directory>|<Directory />\n    AllowOverride none\n    Require all granted\n</Directory>|isg
+#6 0.061 + tr \r \n
+#6 0.061 + tee /tmp/httpd.conf
+#6 0.061 #
+#6 0.061 # This is the main Apache HTTP server configuration file.  It contains the
+#6 0.061 # configuration directives that give the server its instructions.
+#6 0.061 # See <URL:http://httpd.apache.org/docs/2.4/> for detailed information.
+#6 0.061 # In particular, see 
+#6 0.061 # <URL:http://httpd.apache.org/docs/2.4/mod/directives.html>
+#6 0.061 # for a discussion of each configuration directive.
+#6 0.061 #
+#6 0.061 # Do NOT simply read the instructions in here without understanding
+#6 0.061 # what they do.  They're here only as hints or reminders.  If you are unsure
+#6 0.061 # consult the online docs. You have been warned.  
+#6 0.061 #
+#6 0.061 # Configuration and logfile names: If the filenames you specify for many
+#6 0.061 # of the server's control files begin with "/" (or "drive:/" for Win32), the
+#6 0.061 # server will use that explicit path.  If the filenames do *not* begin
+#6 0.061 # with "/", the value of ServerRoot is prepended -- so "logs/access_log"
+#6 0.061 # with ServerRoot set to "/usr/local/apache2" will be interpreted by the
+#6 0.061 # server as "/usr/local/apache2/logs/access_log", whereas "/logs/access_log" 
+#6 0.061 # will be interpreted as '/logs/access_log'.
+#6 0.061 
+#6 0.061 #
+#6 0.061 # ServerRoot: The top of the directory tree under which the server's
+#6 0.061 # configuration, error, and log files are kept.
+#6 0.061 #
+#6 0.061 # Do not add a slash at the end of the directory path.  If you point
+#6 0.061 # ServerRoot at a non-local disk, be sure to specify a local disk on the
+#6 0.061 # Mutex directive, if file-based mutexes are used.  If you wish to share the
+#6 0.061 # same ServerRoot for multiple httpd daemons, you will need to change at
+#6 0.061 # least PidFile.
+#6 0.061 #
+#6 0.061 ServerRoot "/usr/local/apache2"
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Mutex: Allows you to set the mutex mechanism and mutex file directory
+#6 0.061 # for individual mutexes, or change the global defaults
+#6 0.061 #
+#6 0.061 # Uncomment and change the directory if mutexes are file-based and the default
+#6 0.061 # mutex file directory is not on a local disk or is not appropriate for some
+#6 0.061 # other reason.
+#6 0.061 #
+#6 0.061 # Mutex default:logs
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Listen: Allows you to bind Apache to specific IP addresses and/or
+#6 0.061 # ports, instead of the default. See also the <VirtualHost>
+#6 0.061 # directive.
+#6 0.061 #
+#6 0.061 # Change this to Listen on specific IP addresses as shown below to 
+#6 0.061 # prevent Apache from glomming onto all bound IP addresses.
+#6 0.061 #
+#6 0.061 #Listen 12.34.56.78:80
+#6 0.061 Listen 80
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Dynamic Shared Object (DSO) Support
+#6 0.061 #
+#6 0.061 # To be able to use the functionality of a module which was built as a DSO you
+#6 0.061 # have to place corresponding `LoadModule' lines at this location so the
+#6 0.061 # directives contained in it are actually available _before_ they are used.
+#6 0.061 # Statically compiled modules (those listed by `httpd -l') do not need
+#6 0.061 # to be loaded here.
+#6 0.061 #
+#6 0.061 # Example:
+#6 0.061 # LoadModule foo_module modules/mod_foo.so
+#6 0.061 #
+#6 0.061 LoadModule mpm_event_module modules/mod_mpm_event.so
+#6 0.061 #LoadModule mpm_prefork_module modules/mod_mpm_prefork.so
+#6 0.061 #LoadModule mpm_worker_module modules/mod_mpm_worker.so
+#6 0.061 LoadModule authn_file_module modules/mod_authn_file.so
+#6 0.061 #LoadModule authn_dbm_module modules/mod_authn_dbm.so
+#6 0.061 #LoadModule authn_anon_module modules/mod_authn_anon.so
+#6 0.061 #LoadModule authn_dbd_module modules/mod_authn_dbd.so
+#6 0.061 #LoadModule authn_socache_module modules/mod_authn_socache.so
+#6 0.061 LoadModule authn_core_module modules/mod_authn_core.so
+#6 0.061 LoadModule authz_host_module modules/mod_authz_host.so
+#6 0.061 LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+#6 0.061 LoadModule authz_user_module modules/mod_authz_user.so
+#6 0.061 #LoadModule authz_dbm_module modules/mod_authz_dbm.so
+#6 0.061 #LoadModule authz_owner_module modules/mod_authz_owner.so
+#6 0.061 #LoadModule authz_dbd_module modules/mod_authz_dbd.so
+#6 0.061 LoadModule authz_core_module modules/mod_authz_core.so
+#6 0.061 #LoadModule authnz_ldap_module modules/mod_authnz_ldap.so
+#6 0.061 #LoadModule authnz_fcgi_module modules/mod_authnz_fcgi.so
+#6 0.061 LoadModule access_compat_module modules/mod_access_compat.so
+#6 0.061 LoadModule auth_basic_module modules/mod_auth_basic.so
+#6 0.061 #LoadModule auth_form_module modules/mod_auth_form.so
+#6 0.061 #LoadModule auth_digest_module modules/mod_auth_digest.so
+#6 0.061 #LoadModule allowmethods_module modules/mod_allowmethods.so
+#6 0.061 #LoadModule isapi_module modules/mod_isapi.so
+#6 0.061 #LoadModule file_cache_module modules/mod_file_cache.so
+#6 0.061 #LoadModule cache_module modules/mod_cache.so
+#6 0.061 #LoadModule cache_disk_module modules/mod_cache_disk.so
+#6 0.061 #LoadModule cache_socache_module modules/mod_cache_socache.so
+#6 0.061 #LoadModule socache_shmcb_module modules/mod_socache_shmcb.so
+#6 0.061 #LoadModule socache_dbm_module modules/mod_socache_dbm.so
+#6 0.061 #LoadModule socache_memcache_module modules/mod_socache_memcache.so
+#6 0.061 #LoadModule socache_redis_module modules/mod_socache_redis.so
+#6 0.061 #LoadModule watchdog_module modules/mod_watchdog.so
+#6 0.061 #LoadModule macro_module modules/mod_macro.so
+#6 0.061 #LoadModule dbd_module modules/mod_dbd.so
+#6 0.061 #LoadModule bucketeer_module modules/mod_bucketeer.so
+#6 0.061 #LoadModule dumpio_module modules/mod_dumpio.so
+#6 0.061 #LoadModule echo_module modules/mod_echo.so
+#6 0.061 #LoadModule example_hooks_module modules/mod_example_hooks.so
+#6 0.061 #LoadModule case_filter_module modules/mod_case_filter.so
+#6 0.061 #LoadModule case_filter_in_module modules/mod_case_filter_in.so
+#6 0.061 #LoadModule example_ipc_module modules/mod_example_ipc.so
+#6 0.061 #LoadModule buffer_module modules/mod_buffer.so
+#6 0.061 #LoadModule data_module modules/mod_data.so
+#6 0.061 #LoadModule ratelimit_module modules/mod_ratelimit.so
+#6 0.061 LoadModule reqtimeout_module modules/mod_reqtimeout.so
+#6 0.061 #LoadModule ext_filter_module modules/mod_ext_filter.so
+#6 0.061 #LoadModule request_module modules/mod_request.so
+#6 0.061 #LoadModule include_module modules/mod_include.so
+#6 0.061 LoadModule filter_module modules/mod_filter.so
+#6 0.061 #LoadModule reflector_module modules/mod_reflector.so
+#6 0.061 #LoadModule substitute_module modules/mod_substitute.so
+#6 0.061 #LoadModule sed_module modules/mod_sed.so
+#6 0.061 #LoadModule charset_lite_module modules/mod_charset_lite.so
+#6 0.061 #LoadModule deflate_module modules/mod_deflate.so
+#6 0.061 #LoadModule xml2enc_module modules/mod_xml2enc.so
+#6 0.061 #LoadModule proxy_html_module modules/mod_proxy_html.so
+#6 0.061 #LoadModule brotli_module modules/mod_brotli.so
+#6 0.061 LoadModule mime_module modules/mod_mime.so
+#6 0.061 #LoadModule ldap_module modules/mod_ldap.so
+#6 0.061 LoadModule log_config_module modules/mod_log_config.so
+#6 0.061 #LoadModule log_debug_module modules/mod_log_debug.so
+#6 0.061 #LoadModule log_forensic_module modules/mod_log_forensic.so
+#6 0.061 #LoadModule logio_module modules/mod_logio.so
+#6 0.061 #LoadModule lua_module modules/mod_lua.so
+#6 0.061 LoadModule env_module modules/mod_env.so
+#6 0.061 #LoadModule mime_magic_module modules/mod_mime_magic.so
+#6 0.061 #LoadModule cern_meta_module modules/mod_cern_meta.so
+#6 0.061 #LoadModule expires_module modules/mod_expires.so
+#6 0.061 LoadModule headers_module modules/mod_headers.so
+#6 0.061 #LoadModule ident_module modules/mod_ident.so
+#6 0.061 #LoadModule usertrack_module modules/mod_usertrack.so
+#6 0.061 #LoadModule unique_id_module modules/mod_unique_id.so
+#6 0.061 LoadModule setenvif_module modules/mod_setenvif.so
+#6 0.061 LoadModule version_module modules/mod_version.so
+#6 0.061 #LoadModule remoteip_module modules/mod_remoteip.so
+#6 0.061 #LoadModule proxy_module modules/mod_proxy.so
+#6 0.061 #LoadModule proxy_connect_module modules/mod_proxy_connect.so
+#6 0.061 #LoadModule proxy_ftp_module modules/mod_proxy_ftp.so
+#6 0.061 #LoadModule proxy_http_module modules/mod_proxy_http.so
+#6 0.061 #LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+#6 0.061 #LoadModule proxy_scgi_module modules/mod_proxy_scgi.so
+#6 0.061 #LoadModule proxy_uwsgi_module modules/mod_proxy_uwsgi.so
+#6 0.061 #LoadModule proxy_fdpass_module modules/mod_proxy_fdpass.so
+#6 0.061 #LoadModule proxy_wstunnel_module modules/mod_proxy_wstunnel.so
+#6 0.061 #LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
+#6 0.061 #LoadModule proxy_balancer_module modules/mod_proxy_balancer.so
+#6 0.061 #LoadModule proxy_express_module modules/mod_proxy_express.so
+#6 0.061 #LoadModule proxy_hcheck_module modules/mod_proxy_hcheck.so
+#6 0.061 #LoadModule session_module modules/mod_session.so
+#6 0.061 #LoadModule session_cookie_module modules/mod_session_cookie.so
+#6 0.061 #LoadModule session_crypto_module modules/mod_session_crypto.so
+#6 0.061 #LoadModule session_dbd_module modules/mod_session_dbd.so
+#6 0.061 #LoadModule slotmem_shm_module modules/mod_slotmem_shm.so
+#6 0.061 #LoadModule slotmem_plain_module modules/mod_slotmem_plain.so
+#6 0.061 #LoadModule ssl_module modules/mod_ssl.so
+#6 0.061 #LoadModule optional_hook_export_module modules/mod_optional_hook_export.so
+#6 0.061 #LoadModule optional_hook_import_module modules/mod_optional_hook_import.so
+#6 0.061 #LoadModule optional_fn_import_module modules/mod_optional_fn_import.so
+#6 0.061 #LoadModule optional_fn_export_module modules/mod_optional_fn_export.so
+#6 0.061 #LoadModule dialup_module modules/mod_dialup.so
+#6 0.061 #LoadModule http2_module modules/mod_http2.so
+#6 0.061 #LoadModule proxy_http2_module modules/mod_proxy_http2.so
+#6 0.061 #LoadModule md_module modules/mod_md.so
+#6 0.061 #LoadModule lbmethod_byrequests_module modules/mod_lbmethod_byrequests.so
+#6 0.061 #LoadModule lbmethod_bytraffic_module modules/mod_lbmethod_bytraffic.so
+#6 0.061 #LoadModule lbmethod_bybusyness_module modules/mod_lbmethod_bybusyness.so
+#6 0.061 #LoadModule lbmethod_heartbeat_module modules/mod_lbmethod_heartbeat.so
+#6 0.061 LoadModule unixd_module modules/mod_unixd.so
+#6 0.061 #LoadModule heartbeat_module modules/mod_heartbeat.so
+#6 0.061 #LoadModule heartmonitor_module modules/mod_heartmonitor.so
+#6 0.061 #LoadModule dav_module modules/mod_dav.so
+#6 0.061 LoadModule status_module modules/mod_status.so
+#6 0.061 LoadModule autoindex_module modules/mod_autoindex.so
+#6 0.061 #LoadModule asis_module modules/mod_asis.so
+#6 0.061 #LoadModule info_module modules/mod_info.so
+#6 0.061 #LoadModule suexec_module modules/mod_suexec.so
+#6 0.061 <IfModule !mpm_prefork_module>
+#6 0.061 	LoadModule cgid_module modules/mod_cgid.so
+#6 0.061 </IfModule>
+#6 0.061 <IfModule mpm_prefork_module>
+#6 0.061 	LoadModule cgi_module modules/mod_cgi.so
+#6 0.061 </IfModule>
+#6 0.061 #LoadModule dav_fs_module modules/mod_dav_fs.so
+#6 0.061 #LoadModule dav_lock_module modules/mod_dav_lock.so
+#6 0.061 #LoadModule vhost_alias_module modules/mod_vhost_alias.so
+#6 0.061 #LoadModule negotiation_module modules/mod_negotiation.so
+#6 0.061 LoadModule dir_module modules/mod_dir.so
+#6 0.061 #LoadModule imagemap_module modules/mod_imagemap.so
+#6 0.061 #LoadModule actions_module modules/mod_actions.so
+#6 0.061 #LoadModule speling_module modules/mod_speling.so
+#6 0.061 #LoadModule userdir_module modules/mod_userdir.so
+#6 0.061 LoadModule alias_module modules/mod_alias.so
+#6 0.061 #LoadModule rewrite_module modules/mod_rewrite.so
+#6 0.061 
+#6 0.061 <IfModule unixd_module>
+#6 0.061 #
+#6 0.061 # If you wish httpd to run as a different user or group, you must run
+#6 0.061 # httpd as root initially and it will switch.  
+#6 0.061 #
+#6 0.061 # User/Group: The name (or #number) of the user/group to run httpd as.
+#6 0.061 # It is usually good practice to create a dedicated user and group for
+#6 0.061 # running httpd, as with most system services.
+#6 0.061 #
+#6 0.061 User www-data
+#6 0.061 Group www-data
+#6 0.061 
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 # 'Main' server configuration
+#6 0.061 #
+#6 0.061 # The directives in this section set up the values used by the 'main'
+#6 0.061 # server, which responds to any requests that aren't handled by a
+#6 0.061 # <VirtualHost> definition.  These values also provide defaults for
+#6 0.061 # any <VirtualHost> containers you may define later in the file.
+#6 0.061 #
+#6 0.061 # All of these directives may appear inside <VirtualHost> containers,
+#6 0.061 # in which case these default settings will be overridden for the
+#6 0.061 # virtual host being defined.
+#6 0.061 #
+#6 0.061 
+#6 0.061 #
+#6 0.061 # ServerAdmin: Your address, where problems with the server should be
+#6 0.061 # e-mailed.  This address appears on some server-generated pages, such
+#6 0.061 # as error documents.  e.g. admin@your-domain.com
+#6 0.061 #
+#6 0.061 ServerAdmin you@example.com
+#6 0.061 
+#6 0.061 #
+#6 0.061 # ServerName gives the name and port that the server uses to identify itself.
+#6 0.061 # This can often be determined automatically, but we recommend you specify
+#6 0.061 # it explicitly to prevent problems during startup.
+#6 0.061 #
+#6 0.061 # If your host doesn't have a registered DNS name, enter its IP address here.
+#6 0.061 #
+#6 0.061 #ServerName www.example.com:80
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Deny access to the entirety of your server's filesystem. You must
+#6 0.061 # explicitly permit access to web content directories in other 
+#6 0.061 # <Directory> blocks below.
+#6 0.061 #
+#6 0.061 <Directory />
+#6 0.061     AllowOverride none
+#6 0.061     Require all granted
+#6 0.061 </Directory>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Note that from this point forward you must specifically allow
+#6 0.061 # particular features to be enabled - so if something's not working as
+#6 0.061 # you might expect, make sure that you have specifically enabled it
+#6 0.061 # below.
+#6 0.061 #
+#6 0.061 
+#6 0.061 #
+#6 0.061 # DocumentRoot: The directory out of which you will serve your
+#6 0.061 # documents. By default, all requests are taken from this directory, but
+#6 0.061 # symbolic links and aliases may be used to point to other locations.
+#6 0.061 #
+#6 0.061 DocumentRoot "/usr/local/apache2/htdocs"
+#6 0.061 <Directory "/usr/local/apache2/htdocs">
+#6 0.061     #
+#6 0.061     # Possible values for the Options directive are "None", "All",
+#6 0.061     # or any combination of:
+#6 0.061     #   Indexes Includes FollowSymLinks SymLinksifOwnerMatch ExecCGI MultiViews
+#6 0.061     #
+#6 0.061     # Note that "MultiViews" must be named *explicitly* --- "Options All"
+#6 0.061     # doesn't give it to you.
+#6 0.061     #
+#6 0.061     # The Options directive is both complicated and important.  Please see
+#6 0.061     # http://httpd.apache.org/docs/2.4/mod/core.html#options
+#6 0.061     # for more information.
+#6 0.061     #
+#6 0.061     Options Indexes FollowSymLinks
+#6 0.061 
+#6 0.061     #
+#6 0.061     # AllowOverride controls what directives may be placed in .htaccess files.
+#6 0.061     # It can be "All", "None", or any combination of the keywords:
+#6 0.061     #   AllowOverride FileInfo AuthConfig Limit
+#6 0.061     #
+#6 0.061     AllowOverride None
+#6 0.061 
+#6 0.061     #
+#6 0.061     # Controls who can get stuff from this server.
+#6 0.061     #
+#6 0.061     Require all granted
+#6 0.061 </Directory>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # DirectoryIndex: sets the file that Apache will serve if a directory
+#6 0.061 # is requested.
+#6 0.061 #
+#6 0.061 <IfModule dir_module>
+#6 0.061     DirectoryIndex index.html
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # The following lines prevent .htaccess and .htpasswd files from being 
+#6 0.061 # viewed by Web clients. 
+#6 0.061 #
+#6 0.061 <Files ".ht*">
+#6 0.061     Require all denied
+#6 0.061 </Files>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # ErrorLog: The location of the error log file.
+#6 0.061 # If you do not specify an ErrorLog directive within a <VirtualHost>
+#6 0.061 # container, error messages relating to that virtual host will be
+#6 0.061 # logged here.  If you *do* define an error logfile for a <VirtualHost>
+#6 0.061 # container, that host's errors will be logged there and not here.
+#6 0.061 #
+#6 0.061 ErrorLog /proc/self/fd/2
+#6 0.061 
+#6 0.061 #
+#6 0.061 # LogLevel: Control the number of messages logged to the error_log.
+#6 0.061 # Possible values include: debug, info, notice, warn, error, crit,
+#6 0.061 # alert, emerg.
+#6 0.061 #
+#6 0.061 LogLevel warn
+#6 0.061 
+#6 0.061 <IfModule log_config_module>
+#6 0.061     #
+#6 0.061     # The following directives define some format nicknames for use with
+#6 0.061     # a CustomLog directive (see below).
+#6 0.061     #
+#6 0.061     LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+#6 0.061     LogFormat "%h %l %u %t \"%r\" %>s %b" common
+#6 0.061 
+#6 0.061     <IfModule logio_module>
+#6 0.061       # You need to enable mod_logio.c to use %I and %O
+#6 0.061       LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+#6 0.061     </IfModule>
+#6 0.061 
+#6 0.061     #
+#6 0.061     # The location and format of the access logfile (Common Logfile Format).
+#6 0.061     # If you do not define any access logfiles within a <VirtualHost>
+#6 0.061     # container, they will be logged here.  Contrariwise, if you *do*
+#6 0.061     # define per-<VirtualHost> access logfiles, transactions will be
+#6 0.061     # logged therein and *not* in this file.
+#6 0.061     #
+#6 0.061     CustomLog /proc/self/fd/1 common
+#6 0.061 
+#6 0.061     #
+#6 0.061     # If you prefer a logfile with access, agent, and referer information
+#6 0.061     # (Combined Logfile Format) you can use the following directive.
+#6 0.061     #
+#6 0.061     #CustomLog "logs/access_log" combined
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 <IfModule alias_module>
+#6 0.061     #
+#6 0.061     # Redirect: Allows you to tell clients about documents that used to 
+#6 0.061     # exist in your server's namespace, but do not anymore. The client 
+#6 0.061     # will make a new request for the document at its new location.
+#6 0.061     # Example:
+#6 0.061     # Redirect permanent /foo http://www.example.com/bar
+#6 0.061 
+#6 0.061     #
+#6 0.061     # Alias: Maps web paths into filesystem paths and is used to
+#6 0.061     # access content that does not live under the DocumentRoot.
+#6 0.061     # Example:
+#6 0.061     # Alias /webpath /full/filesystem/path
+#6 0.061     #
+#6 0.061     # If you include a trailing / on /webpath then the server will
+#6 0.061     # require it to be present in the URL.  You will also likely
+#6 0.061     # need to provide a <Directory> section to allow access to
+#6 0.061     # the filesystem path.
+#6 0.061 
+#6 0.061     #
+#6 0.061     # ScriptAlias: This controls which directories contain server scripts. 
+#6 0.061     # ScriptAliases are essentially the same as Aliases, except that
+#6 0.061     # documents in the target directory are treated as applications and
+#6 0.061     # run by the server when requested rather than as documents sent to the
+#6 0.061     # client.  The same rules about trailing "/" apply to ScriptAlias
+#6 0.061     # directives as to Alias.
+#6 0.061     #
+#6 0.061     ScriptAlias /cgi-bin/ "/usr/local/apache2/cgi-bin/"
+#6 0.061 
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 <IfModule cgid_module>
+#6 0.061     #
+#6 0.061     # ScriptSock: On threaded servers, designate the path to the UNIX
+#6 0.061     # socket used to communicate with the CGI daemon of mod_cgid.
+#6 0.061     #
+#6 0.061     #Scriptsock cgisock
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # "/usr/local/apache2/cgi-bin" should be changed to whatever your ScriptAliased
+#6 0.061 # CGI directory exists, if you have that configured.
+#6 0.061 #
+#6 0.061 <Directory "/usr/local/apache2/cgi-bin">
+#6 0.061     AllowOverride None
+#6 0.061     Options None
+#6 0.061     Require all granted
+#6 0.061 </Directory>
+#6 0.061 
+#6 0.061 <IfModule headers_module>
+#6 0.061     #
+#6 0.061     # Avoid passing HTTP_PROXY environment to CGI's on this or any proxied
+#6 0.061     # backend servers which have lingering "httpoxy" defects.
+#6 0.061     # 'Proxy' request header is undefined by the IETF, not listed by IANA
+#6 0.061     #
+#6 0.061     RequestHeader unset Proxy early
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 <IfModule mime_module>
+#6 0.061     #
+#6 0.061     # TypesConfig points to the file containing the list of mappings from
+#6 0.061     # filename extension to MIME-type.
+#6 0.061     #
+#6 0.061     TypesConfig conf/mime.types
+#6 0.061 
+#6 0.061     #
+#6 0.061     # AddType allows you to add to or override the MIME configuration
+#6 0.061     # file specified in TypesConfig for specific file types.
+#6 0.061     #
+#6 0.061     #AddType application/x-gzip .tgz
+#6 0.061     #
+#6 0.061     # AddEncoding allows you to have certain browsers uncompress
+#6 0.061     # information on the fly. Note: Not all browsers support this.
+#6 0.061     #
+#6 0.061     #AddEncoding x-compress .Z
+#6 0.061     #AddEncoding x-gzip .gz .tgz
+#6 0.061     #
+#6 0.061     # If the AddEncoding directives above are commented-out, then you
+#6 0.061     # probably should define those extensions to indicate media types:
+#6 0.061     #
+#6 0.061     AddType application/x-compress .Z
+#6 0.061     AddType application/x-gzip .gz .tgz
+#6 0.061 
+#6 0.061     #
+#6 0.061     # AddHandler allows you to map certain file extensions to "handlers":
+#6 0.061     # actions unrelated to filetype. These can be either built into the server
+#6 0.061     # or added with the Action directive (see below)
+#6 0.061     #
+#6 0.061     # To use CGI scripts outside of ScriptAliased directories:
+#6 0.061     # (You will also need to add "ExecCGI" to the "Options" directive.)
+#6 0.061     #
+#6 0.061     #AddHandler cgi-script .cgi
+#6 0.061 
+#6 0.061     # For type maps (negotiated resources):
+#6 0.061     #AddHandler type-map var
+#6 0.061 
+#6 0.061     #
+#6 0.061     # Filters allow you to process content before it is sent to the client.
+#6 0.061     #
+#6 0.061     # To parse .shtml files for server-side includes (SSI):
+#6 0.061     # (You will also need to add "Includes" to the "Options" directive.)
+#6 0.061     #
+#6 0.061     #AddType text/html .shtml
+#6 0.061     #AddOutputFilter INCLUDES .shtml
+#6 0.061 </IfModule>
+#6 0.061 
+#6 0.061 #
+#6 0.061 # The mod_mime_magic module allows the server to use various hints from the
+#6 0.061 # contents of the file itself to determine its type.  The MIMEMagicFile
+#6 0.061 # directive tells the module where the hint definitions are located.
+#6 0.061 #
+#6 0.061 #MIMEMagicFile conf/magic
+#6 0.061 
+#6 0.061 #
+#6 0.061 # Customizable error responses come in three flavors:
+#6 0.061 # 1) plain text 2) local redirects 3) external redirects
+#6 0.061 #
+#6 0.061 # Some examples:
+#6 0.061 #ErrorDocument 500 "The server made a boo boo."
+#6 0.061 #ErrorDocument 404 /missing.html
+#6 0.061 #ErrorDocument 404 "/cgi-bin/missing_handler.pl"
+#6 0.061 #ErrorDocument 402 http://www.example.com/subscription_info.html
+#6 0.061 #
+#6 0.061 
+#6 0.061 #
+#6 0.061 # MaxRanges: Maximum number of Ranges in a request before
+#6 0.061 # returning the entire resource, or one of the special
+#6 0.061 # values 'default', 'none' or 'unlimited'.
+#6 0.061 # Default setting is to accept 200 Ranges.
+#6 0.061 #MaxRanges unlimited
+#6 0.061 
+#6 0.061 #
+#6 0.061 # EnableMMAP and EnableSendfile: On systems that support it, 
+#6 0.061 # memory-mapping or the sendfile syscall may be used to deliver
+#6 0.061 # files.  This usually improves server performance, but must
+#6 0.061 # be turned off when serving from networked-mounted 
+#6 0.061 # filesystems or if support for these functions is otherwise
+#6 0.061 # broken on your system.
+#6 0.061 # Defaults: EnableMMAP On, EnableSendfile Off
+#6 0.061 #
+#6 0.061 #EnableMMAP off
+#6 0.061 #EnableSendfile on
+#6 0.061 
+#6 0.061 # Supplemental configuration
+#6 0.061 #
+#6 0.061 # The configuration files in the conf/extra/ directory can be 
+#6 0.061 # included to add extra features or to modify the default configuration of 
+#6 0.061 # the server, or you may simply copy their contents here and change as 
+#6 0.061 # necessary.
+#6 0.061 
+#6 0.061 # Server-pool management (MPM specific)
+#6 0.061 #Include conf/extra/httpd-mpm.conf
+#6 0.061 
+#6 0.061 # Multi-language error messages
+#6 0.061 #Include conf/extra/httpd-multilang-errordoc.conf
+#6 0.061 
+#6 0.061 # Fancy directory listings
+#6 0.061 Include conf/extra/httpd-autoindex.conf
+#6 0.061 
+#6 0.061 # Language settings
+#6 0.061 #Include conf/extra/httpd-languages.conf
+#6 0.061 
+#6 0.061 # User home directories
+#6 0.061 #Include conf/extra/httpd-userdir.conf
+#6 0.061 
+#6 0.061 # Real-time info on requests and configuration
+#6 0.061 #Include conf/extra/httpd-info.conf
+#6 0.061 
+#6 0.061 # Virtual hosts
+#6 0.061 #Include conf/extra/httpd-vhosts.conf
+#6 0.061 
+#6 0.061 # Local access to the Apache HTTP Server Manual
+#6 0.061 #Include conf/extra/httpd-manual.conf
+#6 0.061 
+#6 0.061 # Distributed authoring and versioning (WebDAV)
+#6 0.061 #Include conf/extra/httpd-dav.conf
+#6 0.061 
+#6 0.061 # Various default settings
+#6 0.061 #Include conf/extra/httpd-default.conf
+#6 0.061 
+#6 0.061 # Configure mod_proxy_html to understand HTML4/XHTML1
+#6 0.061 <IfModule proxy_html_module>
+#6 0.061 Include conf/extra/proxy-html.conf
+#6 0.061 </IfMo+ mv /tmp/httpd.conf /usr/local/apache2/conf/httpd.conf
+#6 0.062 dule>
+#6 0.062 
+#6 0.062 # Secure (SSL/TLS) connections
+#6 0.062 #Include conf/extra/httpd-ssl.conf
+#6 0.062 #
+#6 0.062 # Note: The following must be present to support
+#6 0.062 #       starting without SSL on platforms with no /dev/random equivalent
+#6 0.062 #       but a statically compiled-in mod_ssl.
+#6 0.062 #
+#6 0.062 <IfModule ssl_module>
+#6 0.062 SSLRandomSeed startup builtin
+#6 0.062 SSLRandomSeed connect builtin
+#6 0.062 </IfModule>
+#6 0.062 
+#6 DONE 0.2s
+
+#7 exporting to image
+#7 exporting layers 0.0s done
+#7 exporting manifest sha256:ee5e241d10aba134f5ae10e5837c1f759d4a6cff81686907eee388405fb3ca63 done
+#7 exporting config sha256:18b54a968607e1b82e11dea052ae4c4ec554b872132ab10cea72647974195a33 done
+#7 exporting attestation manifest sha256:f466ac714afe159f6ccf53562268f94cf68380e2123e00274162f3a25fdbc62e done
+#7 exporting manifest list sha256:8d969f7d523f782de8597145250b50987034ca8b4bc643c77afb4d7ca2d6c05c done
+#7 naming to docker.io/library/work1-resume-fixed-apache:latest done
+#7 unpacking to docker.io/library/work1-resume-fixed-apache:latest
+#7 unpacking to docker.io/library/work1-resume-fixed-apache:latest 0.5s done
+#7 DONE 0.6s
+
+#8 resolving provenance for metadata file
+#8 DONE 0.0s
+ Image work1-resume-fixed-apache Building 
+ Image work1-resume-fixed-apache Built 

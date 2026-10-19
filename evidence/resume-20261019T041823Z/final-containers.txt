@@ -1,0 +1,3 @@
+CONTAINER ID   IMAGE                            COMMAND              CREATED              STATUS                              PORTS     NAMES
+19485973a6ad   work1-resume-fixed-apache        "httpd-foreground"   38 seconds ago       Exited (0) Less than a second ago             work1-resume-fixed-apache-1
+ebf08e8383b0   work1-resume-vulnerable-apache   "httpd-foreground"   About a minute ago   Exited (0) 44 seconds ago                     work1-resume-vulnerable-apache-1

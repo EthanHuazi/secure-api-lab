@@ -1,0 +1,50 @@
+ Image work1-before-apache Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 697B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile.vulnerable
+#2 transferring dockerfile: 881B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/httpd:2.4.49
+#3 ...
+
+#4 [auth] library/httpd:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/httpd:2.4.49
+#3 DONE 2.1s
+
+#5 [internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [1/2] FROM docker.io/library/httpd:2.4.49@sha256:dcba0d12e2362fb0c50ec524ae8aa1cca4a4ba7216617a57e7bbca20767e79cc
+#6 resolve docker.io/library/httpd:2.4.49@sha256:dcba0d12e2362fb0c50ec524ae8aa1cca4a4ba7216617a57e7bbca20767e79cc done
+#6 DONE 0.0s
+
+#7 [2/2] RUN set -ex     && sed -i "s|#LoadModule cgid_module modules/mod_cgid.so|LoadModule cgid_module modules/mod_cgid.so|g" /usr/local/apache2/conf/httpd.conf     && sed -i "s|#LoadModule cgi_module modules/mod_cgi.so|LoadModule cgi_module modules/mod_cgi.so|g" /usr/local/apache2/conf/httpd.conf     && sed -i "s|#Include conf/extra/httpd-autoindex.conf|Include conf/extra/httpd-autoindex.conf|g" /usr/local/apache2/conf/httpd.conf     && cat /usr/local/apache2/conf/httpd.conf         | tr '\n' '\r'         | perl -pe 's|<Directory />.*?</Directory>|<Directory />\n    AllowOverride none\n    Require all granted\n</Directory>|isg'         | tr '\r' '\n'         | tee /tmp/httpd.conf     && mv /tmp/httpd.conf /usr/local/apache2/conf/httpd.conf
+#7 CACHED
+
+#8 exporting to image
+#8 exporting layers done
+#8 exporting manifest sha256:a41cf14873a2992be1a367f934eb863b0c2384375314b1a6ca8d8b6c2907db08 done
+#8 exporting config sha256:2e4ecb69328790693f7b43be255ed3a487dfe00635e4fac85d66e46707e035ff done
+#8 exporting attestation manifest sha256:32e2d84dd065b11b9e16f7d0cd0576a31fe2d9f68353dbe694e5e4da3474d837 done
+#8 exporting manifest list sha256:d2f29903b24e258ef65f0721dcfd1a9aa29b3470f592906bcf0bf0cebd2a6a89 done
+#8 naming to docker.io/library/work1-before-apache:latest done
+#8 unpacking to docker.io/library/work1-before-apache:latest done
+#8 DONE 0.0s
+
+#9 resolving provenance for metadata file
+#9 DONE 0.0s
+ Image work1-before-apache Built 
+ Network work1-before_lab Creating 
+ Network work1-before_lab Creating 
+ Network work1-before_lab Created 
+ Network work1-before_lab Created 
+ Container work1-before-apache-1 Creating 
+ Container work1-before-apache-1 Created 
+ Container work1-before-apache-1 Starting 
+ Container work1-before-apache-1 Started 

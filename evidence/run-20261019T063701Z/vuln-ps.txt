@@ -1,0 +1,2 @@
+NAME                    IMAGE                 COMMAND              SERVICE   CREATED          STATUS          PORTS
+work1-before-apache-1   work1-before-apache   "httpd-foreground"   apache    21 seconds ago   Up 21 seconds   127.0.0.1:8080->80/tcp

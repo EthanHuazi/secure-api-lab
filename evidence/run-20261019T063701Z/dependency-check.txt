@@ -1,0 +1,25 @@
+[INFO] Checking for updates
+[ERROR] Error updating the NVD Data
+org.owasp.dependencycheck.data.update.exception.UpdateException: Error updating the NVD Data
+	at org.owasp.dependencycheck.data.update.NvdApiDataSource.processApi(NvdApiDataSource.java:387)
+	at org.owasp.dependencycheck.data.update.NvdApiDataSource.update(NvdApiDataSource.java:128)
+	at org.owasp.dependencycheck.Engine.doUpdates(Engine.java:873)
+	at org.owasp.dependencycheck.Engine.initializeAndUpdateDatabase(Engine.java:678)
+	at org.owasp.dependencycheck.Engine.analyzeDependencies(Engine.java:605)
+	at org.owasp.dependencycheck.App.runScan(App.java:275)
+	at org.owasp.dependencycheck.App.run(App.java:207)
+	at org.owasp.dependencycheck.App.main(App.java:90)
+Caused by: io.github.jeremylong.openvulnerability.client.nvd.NvdApiException: Invalid API Key, length of 0 too short to provided a masked partial key
+	at io.github.jeremylong.openvulnerability.client.nvd.NvdCveClient._next(NvdCveClient.java:436)
+	at io.github.jeremylong.openvulnerability.client.nvd.NvdCveClient.next(NvdCveClient.java:356)
+	at org.owasp.dependencycheck.data.update.NvdApiDataSource.processApi(NvdApiDataSource.java:343)
+	... 7 common frames omitted
+[INFO] Updating CISA Known Exploited Vulnerability list: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+[INFO] Begin database defrag
+[INFO] End database defrag (53 ms)
+[INFO] Check for updates complete (4101 ms)
+[WARN] Unable to update 1 or more Cached Web DataSource, using local data instead. Results may not include recent vulnerabilities.
+[ERROR] Unable to continue dependency-check analysis.
+[ERROR] One or more fatal errors occurred
+[ERROR] Error updating the NVD Data
+[ERROR] No documents exist

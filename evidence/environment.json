@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-19",
+  "architecture": "arm64",
+  "python": "3.12.15",
+  "python_base": "/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12",
+  "project": "/Users/huayichen/\u4e13\u4e1a\u8bfe/Information Security/Labs/secure-api-lab",
+  "docker": "not installed/detected",
+  "java": "no runtime detected",
+  "github_actions": "not executed",
+  "cve_execution": "not executed"
+}

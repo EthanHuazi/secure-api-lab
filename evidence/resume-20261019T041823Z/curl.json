@@ -1,0 +1,69 @@
+{
+  "run_at_utc": "20261019T041826297917Z",
+  "cases": [
+    {
+      "case": "Successful login",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "response": {
+        "access_token": "[REDACTED: actual signed token received]",
+        "expires_in": 900,
+        "token_type": "Bearer"
+      }
+    },
+    {
+      "case": "Failed login",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 401,
+      "response": {
+        "error": "Invalid or missing credentials"
+      }
+    },
+    {
+      "case": "No JWT",
+      "method": "GET",
+      "path": "/api/data",
+      "status": 401,
+      "response": {
+        "error": "Invalid or missing credentials"
+      }
+    },
+    {
+      "case": "Valid JWT data",
+      "method": "GET",
+      "path": "/api/data",
+      "status": 200,
+      "response": {
+        "data": [
+          {
+            "id": 1,
+            "title": "Information Security Lab"
+          }
+        ]
+      }
+    },
+    {
+      "case": "Valid JWT profile",
+      "method": "GET",
+      "path": "/api/profile",
+      "status": 200,
+      "response": {
+        "user": {
+          "id": 1,
+          "username": "curl-student"
+        }
+      }
+    },
+    {
+      "case": "SQL injection rejected",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 401,
+      "response": {
+        "error": "Invalid or missing credentials"
+      }
+    }
+  ]
+}
