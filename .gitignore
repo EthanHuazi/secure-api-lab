@@ -15,6 +15,9 @@ htmlcov/
 .dependency-check-data/
 .cache/
 
+# Local agent working notes. Never part of the submission.
+.workbuddy/
+
 # Local report artifacts. Both carry the student's HDU number, which is kept
 # out of the public repository on purpose. Remove these two lines if you decide
 # the report generator may be published.

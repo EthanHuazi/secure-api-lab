@@ -82,10 +82,10 @@ Re-verified on 2026-10-19 during the regression pass: **40 pytest tests passed**
 
 **Actual remote result.** The workflow ran automatically after publishing:
 
-| Run | Commit | Result |
-|---|---|---|
-| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | `00d88d0` | Overall **failure**. `tests-and-sast` **passed** in 24s and produced the `api-test-and-sast-reports` artifact; `dependency-check` **failed** in 11s |
-| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | `79ad0c5` | Triggered after wiring the `NVD_API_KEY` secret; expected to fail on `dependency-check` until the secret is populated |
+| Run | Result |
+|---|---|
+| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | Overall **failure**. `tests-and-sast` **passed** in 24s and produced the `api-test-and-sast-reports` artifact; `dependency-check` **failed** in 11s |
+| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | Triggered after wiring the `NVD_API_KEY` secret; expected to fail on `dependency-check` until the secret is populated |
 
 The `dependency-check` failure is the NVD API-key blocker described under SCA Results, surfaced remotely exactly as it was locally; it is not a code defect and has not been suppressed. The `NVD_API_KEY` repository secret was wired into the workflow so that adding the key is the only remaining step. There is no fully green workflow run yet.
 

@@ -53,10 +53,10 @@ Public repository URL: **https://github.com/EthanHuazi/secure-api-lab** (publish
 
 Pipeline runs (both triggered by push; the repository has now been published and Actions executes automatically):
 
-| Run | Commit | Result |
-|---|---|---|
-| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | `00d88d0` | **Overall: failure.** `tests-and-sast` **passed** (24s, artifact `api-test-and-sast-reports`); `dependency-check` **failed** (11s) — no NVD API key |
-| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | `79ad0c5` | Running at time of writing; expected to fail on `dependency-check` for the same reason |
+| Run | Result |
+|---|---|
+| [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | **Overall: failure.** `tests-and-sast` **passed** (24s, artifact `api-test-and-sast-reports`); `dependency-check` **failed** (11s) — no NVD API key |
+| [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | Running at time of writing; expected to fail on `dependency-check` for the same reason |
 
 Last **fully successful** pipeline URL: **not available yet.** The `tests-and-sast` job succeeds, which already satisfies "at least one SAST/SCA tool running", but the workflow is red while Dependency-Check cannot obtain NVD data. Adding the `NVD_API_KEY` repository secret and re-running should make the whole workflow green.
 
