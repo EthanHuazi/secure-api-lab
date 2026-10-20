@@ -73,9 +73,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          # Fail with a readable message instead of a tool-level NvdApiException
+          # when the repository secret has not been configured.
+          if [ -z "${NVD_API_KEY:-}" ]; then
+            echo "::error::NVD_API_KEY is empty. Add the repository secret NVD_API_KEY."
+            exit 1
+          fi
           "$RUNNER_TEMP/dc/dependency-check/bin/dependency-check.sh" \
             --project secure-api-lab --scan .scan-packages \
             --enableExperimental --disableOssIndex \
+            --nvdApiKey "$NVD_API_KEY" \
             --data .dependency-check-data --out .ci-reports/dependency-check \
             --format HTML --format JSON --failOnCVSS 7
       - uses: actions/upload-artifact@v4
