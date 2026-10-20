@@ -40,7 +40,9 @@ jobs:
             .ci-reports/pip-audit.json
   dependency-check:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # The first NVD sync downloads ~410k CVE records and can take over an hour;
+    # later runs are incremental from the saved cache.
+    timeout-minutes: 300
     env:
       # This workflow requires the NVD_API_KEY repository secret for NVD updates.
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
@@ -61,7 +63,8 @@ jobs:
           set -euo pipefail
           curl --fail --location --retry 3 -o "$RUNNER_TEMP/dc.zip" https://github.com/dependency-check/DependencyCheck/releases/download/v13.0.0/dependency-check-13.0.0-release.zip
           unzip -q "$RUNNER_TEMP/dc.zip" -d "$RUNNER_TEMP/dc"
-      - uses: actions/cache@v4
+      - name: Restore Dependency-Check NVD data
+        uses: actions/cache/restore@v4
         with:
           path: .dependency-check-data
           key: dc-13-${{ runner.os }}-${{ github.run_id }}
@@ -101,3 +104,45 @@ jobs:
           name: owasp-dependency-check-reports
           path: .ci-reports/dependency-check/
           if-no-files-found: warn
+      - name: Summarise Dependency-Check findings
+        if: always()
+        shell: bash
+        run: |
+          report=.ci-reports/dependency-check/dependency-check-report.json
+          if [ ! -f "$report" ]; then
+            echo "No Dependency-Check report was produced."
+            exit 0
+          fi
+          python - "$report" <<'PY'
+          import json, sys
+
+          with open(sys.argv[1], encoding="utf-8") as fh:
+              data = json.load(fh)
+          deps = data.get("dependencies", [])
+          total = 0
+          for dep in deps:
+              for v in dep.get("vulnerabilities", []):
+                  total += 1
+                  name = dep.get("fileName") or dep.get("filePath") or "?"
+                  sev = v.get("severity", "?")
+                  score = (v.get("cvssv3") or {}).get("baseScore") \
+                          or (v.get("cvssv2") or {}).get("score") or "?"
+                  if total <= 10:
+                      print(f"::warning::{name}: {v.get('name')} "
+                            f"severity={sev} score={score}")
+          print(f"Dependency-Check: {len(deps)} dependencies analysed, "
+                f"{total} vulnerability findings.")
+          if total:
+              print("::warning::Dependency-Check reported "
+                    f"{total} findings; triage, fix or suppress with justification.")
+          PY
+      # actions/cache only saves on success, which discarded a fully synced NVD
+      # database whenever the scan gate failed, forcing a full ~410k-record
+      # re-download on every attempt. Save unconditionally instead: a partially
+      # synced database still lets the next run resume instead of restarting.
+      - name: Save Dependency-Check NVD data
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .dependency-check-data
+          key: dc-13-${{ runner.os }}-${{ github.run_id }}
