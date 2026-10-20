@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+  <suppress until="2027-01-20Z">
+    <notes><![CDATA[
+Reviewed 2026-10-20. Run 39363679093 incorrectly matched Python PyJWT 2.15.1
+against jwt_project:jwt. CVE-2025-45770's original report identifies
+lcobucci/jwt (PHP), not jpadilla/pyjwt (Python). This is a product mismatch;
+the disputed status alone is not the reason for suppression.
+Sources:
+https://nvd.nist.gov/vuln/detail/CVE-2025-45770
+https://gist.github.com/ZupeiNie/cd88c827eef11a1618f8baacccd240fb
+Exact package/version and CVE only. Re-review on dependency upgrade or expiry.
+    ]]></notes>
+    <packageUrl regex="false">pkg:pypi/pyjwt@2.15.1</packageUrl>
+    <cve>CVE-2025-45770</cve>
+  </suppress>
+</suppressions>

@@ -42,10 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     env:
-      # NVD's CVE API requires an API key. Without this repository secret the
-      # scan aborts with "Invalid API Key" / "No documents exist". Request a free
-      # key at https://nvd.nist.gov/developers/request-an-api-key and add it as
-      # the repository secret NVD_API_KEY.
+      # This workflow requires the NVD_API_KEY repository secret for NVD updates.
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
       - uses: actions/checkout@v4
@@ -72,22 +69,13 @@ jobs:
       - name: OWASP Dependency-Check SCA
         shell: bash
         run: |
-          set -uo pipefail
+          set -euo pipefail
           # Fail with a readable message instead of a tool-level NvdApiException
           # when the repository secret has not been configured.
           if [ -z "${NVD_API_KEY:-}" ]; then
             echo "::error::NVD_API_KEY is empty. Add the repository secret NVD_API_KEY."
             exit 1
           fi
-          # A pasted key may carry a trailing newline or the wrong length; check the
-          # shape without ever printing the value. NVD issues UUID-style keys
-          # (8-4-4-4-12, 36 characters); a plain 32-hex key is also accepted.
-          if ! printf '%s' "$NVD_API_KEY" | grep -Eq '^([0-9a-fA-F]{32}|[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$'; then
-            echo "::warning::NVD_API_KEY does not match the expected UUID or 32-hex shape; length is ${#NVD_API_KEY} characters."
-          fi
-          # Dependency-Check validates --out and refuses to create the directory
-          # itself: without this the scan aborts in seconds with
-          # "Invalid 'out' argument: ... path does not exist".
           mkdir -p .ci-reports/dependency-check
           set +e
           "$RUNNER_TEMP/dc/dependency-check/bin/dependency-check.sh" \
@@ -95,15 +83,17 @@ jobs:
             --enableExperimental --disableOssIndex \
             --nvdApiKey "$NVD_API_KEY" \
             --data .dependency-check-data --out .ci-reports/dependency-check \
-            --format HTML --format JSON --failOnCVSS 7 > dc.log 2>&1
-          status=$?
+            --suppression dependency-check-suppressions.xml \
+            --format HTML --format JSON --failOnCVSS 7 2>&1 | tee .ci-reports/dependency-check/dc.log
+          pipeline_status=("${PIPESTATUS[@]}")
+          status=${pipeline_status[0]}
+          if [ "$status" -eq 0 ] && [ "${pipeline_status[1]}" -ne 0 ]; then
+            status=${pipeline_status[1]}
+          fi
           set -e
-          tail -n 25 dc.log
-          # Surface the tool's own error text in the run annotations, so the failure
-          # is diagnosable without downloading the job log.
-          while IFS= read -r line; do
-            echo "::error::${line}"
-          done < <(grep -iE 'error|exception|invalid|unable|denied' dc.log | tail -n 6)
+          if [ "$status" -ne 0 ]; then
+            echo "::error::Dependency-Check failed with exit code $status. See the live log and owasp-dependency-check-reports artifact."
+          fi
           exit "$status"
       - uses: actions/upload-artifact@v4
         if: always()
