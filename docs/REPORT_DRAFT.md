@@ -11,7 +11,7 @@
 | Public repository | https://github.com/EthanHuazi/secure-api-lab |
 | Selected vulnerability | CVE-2023-51449 (Gradio, `/file` path traversal) |
 
-**Status of this draft:** the API, the security controls and the CVE experiment are executed and verified. The Dependency-Check report is pending an NVD API key, so the `dependency-check` CI job is currently red while `tests-and-sast` passes. Genuine screenshots have not been captured yet. The earlier CVE-2021-41773 experiment is kept in the repository as a historical run and is not part of the findings below.
+**Status of this draft:** the API, the security controls and the CVE experiment are executed and verified, and the CI pipeline reached a fully green run (run #14, 1 h 32 m 22 s) including OWASP Dependency-Check. Genuine screenshots have not been captured yet. The earlier CVE-2021-41773 experiment is kept in the repository as a historical run and is not part of the findings below.
 
 # Part A — Secure REST API
 
@@ -25,7 +25,7 @@ Implement three authenticated REST API operations, prevent SQL injection and uns
 
 ## 3. Development Environment
 
-The workstation runs macOS 26.5.2 on arm64. Python 3.12.15 is installed at `/opt/homebrew/bin/python3.12`. The application uses a separate virtual environment, Git 2.50.1, Flask, SQLite, bcrypt and PyJWT. Docker Desktop 29.8.2 with Docker Compose v5.6.0 provides `linux/arm64` containers, which is what the CVE experiment ran against. No Java runtime is installed, so OWASP Dependency-Check was run from its official container; that scan is blocked pending an NVD API key.
+The workstation runs macOS 26.5.2 on arm64. Python 3.12.15 is installed at `/opt/homebrew/bin/python3.12`. The application uses a separate virtual environment, Git 2.50.1, Flask, SQLite, bcrypt and PyJWT. Docker Desktop 29.8.2 with Docker Compose v5.6.0 provides `linux/arm64` containers, which is what the CVE experiment ran against. No Java runtime is installed, so OWASP Dependency-Check is executed by the GitHub Actions runner rather than locally; that job succeeded in run #14, and the CVE work itself used only loopback-bound Docker containers.
 
 ## 4. REST API Design
 
@@ -45,7 +45,20 @@ The actual local pytest run passed 40 tests. Coverage includes accepted and reje
 
 ## 8. CI/CD Pipeline
 
-The workflow is prepared for pushes and pull requests. It runs tests, curl, Bandit, supplementary pip-audit and OWASP Dependency-Check with report artifacts. Locally, Bandit reported zero findings and pip-audit reported no known vulnerabilities across 10 dependencies. Dependency-Check has not produced a report: run from the official container, it aborted because the NVD CVE API requires an API key (`Invalid API Key` / `No documents exist`). The repository is published and Actions executes on every push; the `tests-and-sast` job is green in every run, the `dependency-check` job is red for that single documented reason. There is no fully green run yet, and the failure has not been suppressed with `continue-on-error`.
+The workflow runs on pushes and pull requests. One job installs the runtime dependencies, executes pytest and the curl checks, and runs Bandit plus a supplementary pip-audit. A second job installs Java 21 and OWASP Dependency-Check 13.0.0, downloads the exact pinned Python distributions, enables the experimental Python analyzers and emits HTML and JSON reports; any finding at or above CVSS 7 fails the job. Report upload uses `always()` so a failed scan can still be inspected, and no step uses `continue-on-error`.
+
+The pipeline is now fully green. Run [#14](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39376435859) on commit `99e16e3` finished **Success** in 1 h 32 m 22 s: `tests-and-sast` took 22 s, `dependency-check` 1 h 32 m, and the run produced two artifacts (`api-test-and-sast-reports` 1.82 KB and `owasp-dependency-check-reports` 52 KB). Its five annotations are all runner deprecation notices (Node.js 20, `setup-java` v4, the `ubuntu-latest` migration), not errors.
+
+Reaching that state required repairing four defects in the workflow instead of relaxing the gate:
+
+1. `--out .ci-reports/dependency-check` named a directory Dependency-Check does not create, so it aborted with `Invalid 'out' argument ... path does not exist` before analysing anything; the step now creates the directory first.
+2. `NVD_API_KEY` was supplied only as a job environment variable, which the tool does not read; it is now passed explicitly as `--nvdApiKey "$NVD_API_KEY"`.
+3. The tool's diagnostics were visible only in job logs, which require authentication; the step re-emits them with `::error::` so they appear as a public annotation. This is how defects 1 and 2 were found.
+4. `actions/cache` saves only on success, so a failed run discarded the 410k-record NVD database and each retry re-downloaded it from zero. The workflow now uses `actions/cache/restore` with `actions/cache/save` under `if: always()`, and the job timeout was raised from 60 to 300 minutes.
+
+Only one finding has ever reached the gate: run `39363679093` exited 15 on CVE-2025-45770, matched to `pkg:pypi/pyjwt@2.15.1`. The advisory describes `lcobucci/jwt` for PHP, so this is a CPE product mismatch against the Python package, not a defect in this project. `dependency-check-suppressions.xml` suppresses that exact package URL and that single CVE until 2027-01-20 and records the reasoning; the threshold, the fail behaviour and every other rule are unchanged, and no other suppression exists.
+
+Locally, Bandit reported zero findings and pip-audit reported no known vulnerabilities across 10 dependencies. The detailed inventory inside the 52 KB Dependency-Check report is read from the artifact, because downloading an Actions artifact requires an authenticated session; capturing it as a screenshot is still outstanding.
 
 # Part B — CVE Case Study: CVE-2023-51449
 
@@ -191,7 +204,7 @@ Both Compose projects were brought down afterwards and `docker ps -a` is empty. 
 
 CVE-2023-51449 was reproduced on Gradio 4.10.0 in an authorized, loopback-only, ARM64-native lab, using a synthetic canary instead of real data. The root cause was confirmed in the shipped source: `abspath()` leaves dot segments unresolved and `is_in_or_equal()` tested only the start of the relative path, so a traversal path was classified as an uploaded file and served. Gradio 4.11.0's one-line change to a substring test rejects the same request with 403, and normal operation is unaffected.
 
-Outstanding items are unchanged and unrelated to the case study: an NVD API key is needed for the mandated Dependency-Check report, genuine screenshots must be captured, and the CI workflow remains red solely because of that missing key.
+The automated pipeline is fully green on run #14, which includes the mandated Dependency-Check scan and its report artifact. What remains is evidence capture rather than unfinished engineering: genuine terminal and Actions screenshots, and the PDF rebuilt once they exist. No marks are self-awarded.
 
 ## 20. References
 
