@@ -72,19 +72,34 @@ jobs:
       - name: OWASP Dependency-Check SCA
         shell: bash
         run: |
-          set -euo pipefail
+          set -uo pipefail
           # Fail with a readable message instead of a tool-level NvdApiException
           # when the repository secret has not been configured.
           if [ -z "${NVD_API_KEY:-}" ]; then
             echo "::error::NVD_API_KEY is empty. Add the repository secret NVD_API_KEY."
             exit 1
           fi
+          # A pasted key may carry a trailing newline or the wrong length; check the
+          # shape without ever printing the value.
+          if ! printf '%s' "$NVD_API_KEY" | grep -Eq '^[0-9a-fA-F]{32}(-[0-9a-fA-F]{8})?$'; then
+            echo "::warning::NVD_API_KEY does not match the expected 32-hex (optionally 8-hex-suffixed) shape; length is ${#NVD_API_KEY} characters."
+          fi
+          set +e
           "$RUNNER_TEMP/dc/dependency-check/bin/dependency-check.sh" \
             --project secure-api-lab --scan .scan-packages \
             --enableExperimental --disableOssIndex \
             --nvdApiKey "$NVD_API_KEY" \
             --data .dependency-check-data --out .ci-reports/dependency-check \
-            --format HTML --format JSON --failOnCVSS 7
+            --format HTML --format JSON --failOnCVSS 7 > dc.log 2>&1
+          status=$?
+          set -e
+          tail -n 25 dc.log
+          # Surface the tool's own error text in the run annotations, so the failure
+          # is diagnosable without downloading the job log.
+          while IFS= read -r line; do
+            echo "::error::${line}"
+          done < <(grep -iE 'error|exception|invalid|unable|denied' dc.log | tail -n 6)
+          exit "$status"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
