@@ -4,11 +4,13 @@
 
 A Python 3.12 / Flask / SQLite teaching project implementing Work 1 of the HDU Information Security manual (pages 1-5). The manual requires three endpoints, SQLi/XSS controls, JWT and password hashing, automated SAST/SCA, and a real Vulhub CVE reproduction followed by remediation and regression tests.
 
-**Status: Part A is verified locally and the CVE experiment has now been executed and remediated in the local Docker lab. Still outstanding: an NVD API key for OWASP Dependency-Check, remote GitHub Actions execution, and genuine screenshots. This is not a completed 10/10 submission.**
+**Status: Part A is verified locally. The case study is CVE-2023-51449 (Gradio), reproduced and remediated in the local Docker lab with saved evidence. Still outstanding: an NVD API key for OWASP Dependency-Check, genuine screenshots, and the final PDF. This is not a completed 10/10 submission.**
+
+The earlier CVE-2021-41773 (Apache) experiment is retained in [cve/CVE-2021-41773](cve/CVE-2021-41773/) as a completed historical run. It is not mixed into the results below.
 
 ## Development Environment
 
-Verified on 2026-10-19: macOS arm64, Python 3.12.15 at `/opt/homebrew/bin/python3.12`, pip 26.2.1, Git 2.50.1, Homebrew 7.0.9, VS Code installed. A project-specific `.venv` is used; system Python was not changed. Docker Desktop 29.8.2 with Docker Compose v5.6.0 is running and produces `linux/arm64` containers; the CVE experiment below was executed against it. Repository: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19). No Java runtime is installed, so Dependency-Check was run from its official container instead; that scan is currently blocked by the missing NVD API key (see SCA Results). GitHub Actions has now executed on the remote repository (see CI/CD Pipeline).
+Verified on 2026-10-20: macOS 26.5.2 on arm64, Python 3.12.15 at `/opt/homebrew/bin/python3.12`, pip 26.2.1, Git 2.50.1, Homebrew 7.0.9, VS Code installed. A project-specific `.venv` is used; system Python was not changed. Docker Desktop 29.8.2 with Docker Compose v5.6.0 is running and produces `linux/aarch64` containers; both CVE experiments were executed against it. Repository: **https://github.com/EthanHuazi/secure-api-lab** (published 2026-10-19). No Java runtime is installed, so Dependency-Check was run from its official container instead; that scan is currently blocked by the missing NVD API key (see SCA Results). GitHub Actions has executed on the remote repository (see CI/CD Pipeline).
 
 ## Installation
 
@@ -74,7 +76,7 @@ bcrypt with cost 12 stores salted hashes only. Unknown users undergo a dummy bcr
 
 Actual local result: **40 pytest tests passed**. Six real curl HTTP checks passed using an ephemeral loopback server. The script initializes its own isolated database, passes secrets through stdin, masks the returned JWT in the evidence, and shuts down the server. Records: [pytest transcript](evidence/pytest.txt), [JUnit](evidence/pytest.xml), [curl responses](evidence/curl.json). These are actual outputs, not screenshots. Test fixture passwords are synthetic, isolated test data.
 
-Re-verified on 2026-10-19 during the regression pass: **40 pytest tests passed** (JUnit regenerated in place) and **6/6 real curl HTTP checks passed** ([transcript](evidence/run-20261019T063701Z/curl-smoke.txt)).
+Re-verified on 2026-10-20 during the CVE case-study swap: **40 pytest tests passed**. This environment's sandbox denies `mkdir` under the system temp directory, so pytest needs `--basetemp=.pytest-tmp`; no test file was modified. Record: [regression-test.txt](evidence/cve-2023-51449/regression-test.txt).
 
 ## CI/CD Pipeline
 
@@ -86,6 +88,7 @@ Re-verified on 2026-10-19 during the regression pass: **40 pytest tests passed**
 |---|---|
 | [#1](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214061398) | Overall **failure**. `tests-and-sast` **passed** in 24s and produced the `api-test-and-sast-reports` artifact; `dependency-check` **failed** in 11s |
 | [#2](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39214172287) | Triggered after wiring the `NVD_API_KEY` secret; expected to fail on `dependency-check` until the secret is populated |
+| [#6](https://github.com/EthanHuazi/secure-api-lab/actions/runs/39215404092) | Current `main` before this swap: `tests-and-sast` passed (23s), `dependency-check` failed (14s) |
 
 The `dependency-check` failure is the NVD API-key blocker described under SCA Results, surfaced remotely exactly as it was locally; it is not a code defect and has not been suppressed. The `NVD_API_KEY` repository secret was wired into the workflow so that adding the key is the only remaining step. There is no fully green workflow run yet.
 
@@ -110,55 +113,134 @@ Caused by: NvdApiException: Invalid API Key, length of 0 too short to provided a
 
 NVD's CVE API now requires an API key; without one Dependency-Check has no vulnerability data and aborts. This is a missing-credential blocker, not a suppressed failure. Full output: [dependency-check.txt](evidence/run-20261019T063701Z/dependency-check.txt). Resolution requires a free NVD API key from https://nvd.nist.gov/developers/request-an-api-key passed as `--nvdApiKey` or `NVD_API_KEY` (CI already has `--disableOssIndex` to avoid the second credentialed feed). pip-audit is a supplementary ecosystem-specific check and does not replace the manual's mandated scanner.
 
-## Selected CVE / Vulnerability Description / Root Cause Analysis
+## CVE Identification
 
-CVE-2021-41773 affects Apache HTTP Server 2.4.49. Incorrect normalization of encoded dot segments permits traversal outside an aliased directory under permissive access configuration. This can expose container files, and CGI configurations can permit code execution. This experiment tested file-disclosure only. See [preparation and analysis](cve/CVE-2021-41773/PLAN.md) and the [executed results](cve/CVE-2021-41773/RESULTS.md).
-
-**Root cause.** 2.4.49 changed URL path normalization so that an encoded dot segment such as `.%2e` is decoded *after* the traversal check rather than before it. The server therefore accepts a URI that still contains a dot segment and resolves it to a path outside the `/icons/` alias. The permissive `<Directory /> Require all granted</Directory>` configuration in the lab image then authorizes reading that resolved path. It is the combination of a canonicalization defect and a permissive filesystem authorization: neither alone would expose the file. 2.4.51 corrected the normalization order; the fixed container's `AH10244` error confirms the newer code rejects the malformed path outright.
-
-## Vulnerability Reproduction
-
-The official Vulhub repository has been cloned separately and the selected upstream configuration is preserved. Docker Hub metadata confirms an ARM64 variant of the equivalent official `httpd:2.4.49` base; the Vulhub prebuilt image is amd64-only, so both images were built locally from the official bases using the preserved vulnerable configuration.
-
-**Executed on 2026-10-19 against the local Docker Desktop lab.** Full results, raw outputs and the configuration defect that was found and fixed are in [CVE-2021-41773/RESULTS.md](cve/CVE-2021-41773/RESULTS.md); raw files are in [evidence/run-20261019T063701Z](evidence/run-20261019T063701Z/).
-
-Before the fix — `Apache/2.4.49 (Unix)`, `aarch64`, bound to `127.0.0.1:8080`:
-
-| Request | Result |
+| Field | Value |
 |---|---|
-| `GET /` | `200 OK`, `It works!` |
-| `GET /icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd` | **`200 OK`, 926 bytes — container `/etc/passwd` disclosed** |
-| `GET /icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd` | **`200 OK`, 926 bytes — disclosed (CVE-2021-42013 variant)** |
+| CVE | **CVE-2023-51449** |
+| Affected software | Gradio (PyPI package `gradio`), a Python library for ML web UIs |
+| Affected versions | `< 4.11.0` |
+| Patched version | `4.11.0` |
+| Severity | High, CVSS 3.1 base **8.6** (`AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:L`) |
+| Advisory | GHSA-6qm2-wpxq-7qh2 |
+| Fix reference | gradio-app/gradio PR #6833 |
+| Vulhub scenario | `gradio/CVE-2023-51449` |
 
-Only file disclosure was tested. No command execution was attempted, no host filesystem was mounted, and every target was `127.0.0.1`.
+Version fields were read from the vendor advisory, not assumed. The Vulhub README says "In Gradio versions 4.11 and below", which conflicts with the advisory's `patched: 4.11.0`; the advisory was treated as authoritative and the question was settled by running both versions. 4.11.0 blocks the request and 4.10.0 does not, so the README wording is imprecise.
 
-## Remediation / Verification After Fix / Regression Testing
+## Vulnerability Description
 
-The applied remediation upgrades the Apache base from 2.4.49 to 2.4.69 while preserving the test configuration byte-for-byte, so the version change is the only variable. See [diff](cve/CVE-2021-41773/remediation.diff) and the vulnerable/fixed Dockerfiles and Compose files. Apache documents that 2.4.50's initial fix was incomplete and the follow-up bypass (CVE-2021-42013) was fixed in 2.4.51; 2.4.69 is later than both.
+Gradio serves uploaded and generated files through a `/file=<path>` route. The route is supposed to accept only files the application produced or the user uploaded, plus anything under explicitly configured `allowed_paths`. In 4.10.0 the containment check could be bypassed with dot segments, so an unauthenticated client who knew a path could read arbitrary files on the host running the app. Gradio's own advisory notes this matters when the app is publicly reachable (`share=True` or a hosted Space) and that the request must be sent programmatically, for example with `curl --path-as-is`, because a browser normalises the URL first.
 
-After the fix — `Apache/2.4.69 (Unix)`, `aarch64`, bound to `127.0.0.1:8081`:
+## Root Cause Analysis
 
-| Request | Result |
-|---|---|
-| `GET /` | `200 OK`, `It works!` — **regression check passed, service still works** |
-| `GET /icons/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd` | **`400 Bad Request`, no file content** |
-| `GET /icons/.%%32%65/.%%32%65/.%%32%65/.%%32%65/etc/passwd` | **`400 Bad Request`, no file content** |
+`/file` calls `utils.abspath()` and then asks `utils.is_in_or_equal(abs_path, app.uploaded_file_dir)` whether the path was uploaded. `abspath()` returns an already-absolute path **unchanged** — its docstring says it does not resolve symlinks, and it does not normalise dot segments either:
 
-The fixed server logs `AH10244: invalid URI path` for both payloads, showing the request is rejected during path validation before any filesystem mapping. That is a genuine rejection of a live server, not a refused connection. Both Compose projects were brought down afterwards and `docker ps -a` is empty.
+```python
+def abspath(path):
+    path = Path(path)
+    if path.is_absolute():
+        return path    # /tmp/gradio/<hash>/../../../srv/private/canary.txt
+```
 
-A configuration defect was also found and corrected: both Compose files declared `networks: lab: internal: true`, and Docker does not publish host ports for services on an internal network. The containers therefore started with no host binding and every earlier HTTP probe failed with "connection refused" — which had correctly been recorded as inconclusive rather than as a failed exploit. Removing `internal: true` restored `127.0.0.1:8080->80` and `127.0.0.1:8081->80`; loopback-only binding preserves the intended isolation. Originals are kept in `evidence/run-20261019T063701Z/compose-original/`. A second, environment-specific note: this shell exports `http_proxy`, so all HTTP evidence was collected with `curl --noproxy '*'` to stop the proxy answering `502 Bad Gateway` for loopback requests.
+`is_in_or_equal()` then calls `Path.relative_to()` on that un-normalised path. Relative to `/tmp/gradio` the result is `<hash>/../../../srv/private/canary.txt`. The 4.10.0 test was a prefix test:
 
-Screenshots of the above still have to be captured by the student from their own terminal; transcripts alone are evidence but not screenshots.
+```python
+if str(path_1.relative_to(path_2)).startswith(".."):
+    return False
+```
+
+The relative string begins with the hash directory, not with `..`, so the predicate returns True. The path is classified as an uploaded file, no 403 is raised, and `FileResponse` opens it; the kernel then resolves the `..` segments and returns `/srv/private/canary.txt`. The defect is a check that inspects only the start of a string instead of asking whether the path, once normalised, is still inside the intended directory.
+
+The fix in 4.11.0 changes that one comparison:
+
+```python
+if ".." in str(path_1.relative_to(path_2)):
+    return False
+```
+
+Because `abspath()` leaves the segments in place, a `..` anywhere in the relative path now fails the check and the route returns 403 before touching the filesystem. The diff of the two installed `gradio/utils.py` files is exactly this line plus an unrelated cache-folder helper; `gradio/routes.py` differs only in that helper's call site and queue-status handling ([fix-diff.txt](evidence/cve-2023-51449/fix-diff.txt)).
+
+Observed behaviour matches this reading: on 4.10.0 the traversal returns 200 while a nonexistent target returns 404 (the containment check passed, only the filesystem objected); on 4.11.0 both return 403 (the containment check now rejects first).
+
+## Vulnerable Environment
+
+The upstream scenario uses the prebuilt image `vulhub/gradio:4.10.0`. `docker inspect` reports `Architecture=amd64`, and the image has a single-platform manifest, so on Apple silicon it would require emulation. The Vulhub repository ships no Dockerfile and no `app.py`; both exist only inside the image. The build recipe was recovered from the image history, `app.py` was extracted with `docker cp` (no amd64 binary executed), and both versions were rebuilt **natively for arm64** from [one Dockerfile](cve/CVE-2023-51449/Dockerfile) whose only variable is `GRADIO_VERSION`:
+
+- base `python:3.9-slim`, Python 3.9.25 inside both images
+- `gradio==4.10.0` / `gradio==4.11.0`, `fastapi==0.112.4`, `pydantic==2.8.2`
+- `huggingface_hub==0.20.3` pinned for reproducibility: an unpinned install now pulls hub 1.x, which removed `HfFolder` and makes `gradio/oauth.py` fail at import, so the container exits before serving. The pin restores the dependency set contemporary with the CVE and does not touch `/file` logic.
+- `app.py` is byte-identical to the upstream image's file: a `gr.Interface` with one text input and one text output, launched on `0.0.0.0:7860`.
+
+Both stacks publish on loopback only (`127.0.0.1:7860` and `127.0.0.1:7861`), mount nothing from the host, and do not use `internal: true` — that flag silently prevents Docker from publishing ports and had broken the earlier Apache lab. Port publication was verified with `docker ps` and `docker port`, not inferred from the Compose file.
+
+The proof target is a synthetic canary created inside the image outside the Gradio temp directory: `/srv/private/canary.txt`, containing `CANARY-CVE-2023-51449-7f3a9c1d`. No real file, credential or user data exists in the container.
+
+## Reproduction Procedure
+
+1. `docker compose -p cve51449-vuln -f compose.vulnerable.yml up -d --no-build`, then confirm `127.0.0.1:7860->7860/tcp`.
+2. Record `uname -m` (`aarch64`), `gradio.__version__` (4.10.0) and `GET /config` (`"version":"4.10.0"`).
+3. `POST /upload` a harmless 28-byte file; the response returns `/tmp/gradio/<hash>/cve-probe.txt`.
+4. Baseline `GET /file=<that path>` returns 200 with the exact uploaded bytes.
+5. Traversal: `GET /file=/tmp/gradio/<hash>/../../../../../../srv/private/canary.txt`, sent with `curl --path-as-is` or on a raw socket so the client cannot normalise the `..`.
+6. Repeat identically against 4.11.0 on port 7861.
+
+Two client-side traps were eliminated before the result was accepted, because each produces a convincing false negative:
+
+- `requests`/`urllib3` rewrite dot segments, so the traversal arrived as `/srv/private/canary.txt` and returned 404. The probe therefore writes the request line on a raw socket; the shell evidence uses `curl --path-as-is`.
+- A traversal cannot start at a regular file (`probe.txt/..` fails with ENOTDIR), so the payload starts at the upload **directory**, matching Vulhub's `.../<hash>/../../..` shape. The first such attempt returned `404 File not found`, which already showed the 403 had been skipped.
+
+The host exports `HTTP_PROXY`, so every request bypasses it (`--noproxy '*'`, `trust_env = False`); otherwise loopback traffic is answered by the proxy with misleading status codes.
+
+## Evidence
+
+| | Vulnerable 4.10.0 | Fixed 4.11.0 |
+|---|---|---|
+| `GET /` | 200 | 200 |
+| `GET /config` version | 4.10.0 | 4.11.0 |
+| Upload + legitimate `GET /file` | 200, 28 bytes, body matches | 200, 28 bytes, body matches |
+| Traversal to canary | **200, 97 bytes, `CANARY-CVE-2023-51449-7f3a9c1d` returned** | **403 `File not allowed`, no content** |
+| Traversal to `/etc/passwd` (secondary) | **200, 839 bytes, disclosed** | **403 `File not allowed`, no content** |
+| Nonexistent traversal target | 404 | 403 |
+| `POST /run/predict` | `{"data":["Hello World!"]}` | `{"data":["Hello World!"]}` |
+
+The canary is the primary proof because it contains no real data; `/etc/passwd` inside the throwaway container is recorded only as secondary confirmation that arbitrary paths, not just one file, were readable. The control request rules out a blanket 200 response. Raw files: [normal-before.txt](evidence/cve-2023-51449/normal-before.txt), [vulnerability-before.txt](evidence/cve-2023-51449/vulnerability-before.txt), [normal-after.txt](evidence/cve-2023-51449/normal-after.txt), [vulnerability-after.txt](evidence/cve-2023-51449/vulnerability-after.txt), [container state](evidence/cve-2023-51449/vulnerable-container.txt), [fixed container](evidence/cve-2023-51449/fixed-container.txt), [environment](evidence/cve-2023-51449/environment.txt), and the machine-readable probes [probe-vulnerable.json](evidence/cve-2023-51449/probe-vulnerable.json) / [probe-fixed.json](evidence/cve-2023-51449/probe-fixed.json). Summary: [RESULTS.md](cve/CVE-2023-51449/RESULTS.md).
+
+## Remediation
+
+The remediation is the vendor fix: upgrade Gradio from 4.10.0 to 4.11.0, the version the advisory names as patched, while keeping the application code, base image, dependency pins and Compose structure identical. No configuration workaround such as tightening `allowed_paths` was used, because that would test a mitigation rather than the fix. The only difference between the two images is the `GRADIO_VERSION` build argument, so the version is the only variable.
+
+## Verification
+
+Against `gradio 4.11.0` on `127.0.0.1:7861`, the identical request now returns:
+
+```
+HTTP/1.1 403 Forbidden
+{"detail":"File not allowed: /tmp/gradio/<hash>/../../../../../../srv/private/canary.txt."}
+```
+
+The response body is checked, not only the status: the canary marker is absent, and the `/etc/passwd` attempt is likewise refused with no content. The nonexistent-target case also returns 403 rather than 404, showing the rejection now happens at the containment check before any filesystem access — the expected shape of this particular fix.
+
+## Regression Testing
+
+- Fixed app: `GET /` returns 200 with the Gradio page, `GET /config` reports 4.11.0, `POST /upload` and the legitimate `GET /file` still return 200 with matching bytes, and `POST /run/predict` still returns `{"data":["Hello World!"]}`. The legitimate read also succeeds *after* the blocked traversal, so the service is not wedged.
+- API: 40 pytest tests pass on 2026-10-20. Six curl HTTP checks pass from the earlier run.
+- Both Compose projects were brought down; `docker ps -a` is empty. Images are kept for review and no global prune was used.
 
 ## Conclusion
 
-Local API functionality and focused security tests are verified, and the CVE-2021-41773 reproduction, root-cause analysis, remediation and regression checks are now executed with saved evidence. Full Work 1 completion still requires an NVD API key to produce a Dependency-Check report, remote GitHub Actions execution, genuine screenshots, and final student details. See [acceptance and screenshots](docs/STATUS.md) and [control questions](docs/CONTROL_QUESTIONS.md). No marks are self-awarded.
+CVE-2023-51449 was reproduced on Gradio 4.10.0 in an authorized, loopback-only, ARM64-native lab, with a canary file as the proof target rather than real data. The root cause was confirmed in the shipped source: `abspath()` leaves dot segments unresolved and `is_in_or_equal()` tested only the start of the relative path, so a traversal path was classified as an uploaded file. Gradio 4.11.0's one-line change to a substring test rejects the same request with 403, and normal operation is unaffected. Outstanding items are unchanged and unrelated to this case study: an NVD API key for Dependency-Check, genuine screenshots, and the final PDF. No marks are self-awarded.
+
+## Appendix: earlier CVE-2021-41773 experiment
+
+The Apache HTTP Server path-traversal experiment was executed on 2026-10-19 and is retained unchanged for reference: [results](cve/CVE-2021-41773/RESULTS.md), [plan](cve/CVE-2021-41773/PLAN.md), [raw evidence](evidence/run-20261019T063701Z/), [original compose files](evidence/run-20261019T063701Z/compose-original/). It is no longer the case study in this report and its numbers are not mixed with the Gradio results.
 
 ## References
 
 - Course manual: Work 1, pages 1-5 (provided locally).
-- [Vulhub](https://github.com/vulhub/vulhub/tree/master/httpd/CVE-2021-41773)
-- [Apache advisories](https://httpd.apache.org/security/vulnerabilities_24.html)
-- [NVD CVE record](https://nvd.nist.gov/vuln/detail/CVE-2021-41773)
+- [GHSA-6qm2-wpxq-7qh2 advisory](https://github.com/gradio-app/gradio/security/advisories/GHSA-6qm2-wpxq-7qh2)
+- [gradio-app/gradio PR #6833](https://github.com/gradio-app/gradio/pull/6833)
+- [NVD CVE-2023-51449](https://nvd.nist.gov/vuln/detail/CVE-2023-51449)
+- [Vulhub gradio/CVE-2023-51449](https://github.com/vulhub/vulhub/tree/master/gradio/CVE-2023-51449)
 - [Dependency-Check Python analyzer](https://dependency-check.github.io/DependencyCheck/analyzers/python.html)
 - [Dependency-Check CLI](https://dependency-check.github.io/DependencyCheck/dependency-check-cli/arguments.html)

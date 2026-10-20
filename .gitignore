@@ -14,6 +14,11 @@ htmlcov/
 .scan-packages/
 .dependency-check-data/
 .cache/
+.pytest-tmp/
+
+# Docker build state produced while building the CVE lab images (buildx
+# activity plus a cli-plugins symlink); machine-local, never part of the lab.
+cve/CVE-2023-51449/.docker-build/
 
 # Local agent working notes. Never part of the submission.
 .workbuddy/
