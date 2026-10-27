@@ -6,13 +6,15 @@ permissions:
   contents: read
 jobs:
   tests-and-sast:
-    runs-on: ubuntu-latest
+    # Pin the runner image so a future ubuntu-latest migration cannot change
+    # the toolchain underneath a previously verified workflow.
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     env:
       EVIDENCE_DIR: .ci-reports
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
           cache: pip
@@ -29,7 +31,7 @@ jobs:
       - name: Supplementary Python dependency audit
         if: ${{ !cancelled() }}
         run: pip-audit -r requirements.txt -f json -o .ci-reports/pip-audit.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: api-test-and-sast-reports
@@ -39,7 +41,7 @@ jobs:
             .ci-reports/bandit.json
             .ci-reports/pip-audit.json
   dependency-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     # The first NVD sync downloads ~410k CVE records and can take over an hour;
     # later runs are incremental from the saved cache.
     timeout-minutes: 300
@@ -47,11 +49,11 @@ jobs:
       # This workflow requires the NVD_API_KEY repository secret for NVD updates.
       NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.12'
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: '21'
@@ -64,7 +66,7 @@ jobs:
           curl --fail --location --retry 3 -o "$RUNNER_TEMP/dc.zip" https://github.com/dependency-check/DependencyCheck/releases/download/v13.0.0/dependency-check-13.0.0-release.zip
           unzip -q "$RUNNER_TEMP/dc.zip" -d "$RUNNER_TEMP/dc"
       - name: Restore Dependency-Check NVD data
-        uses: actions/cache/restore@v4
+        uses: actions/cache/restore@v6
         with:
           path: .dependency-check-data
           key: dc-13-${{ runner.os }}-${{ github.run_id }}
@@ -98,7 +100,7 @@ jobs:
             echo "::error::Dependency-Check failed with exit code $status. See the live log and owasp-dependency-check-reports artifact."
           fi
           exit "$status"
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: owasp-dependency-check-reports
@@ -142,7 +144,7 @@ jobs:
       # synced database still lets the next run resume instead of restarting.
       - name: Save Dependency-Check NVD data
         if: always()
-        uses: actions/cache/save@v4
+        uses: actions/cache/save@v6
         with:
           path: .dependency-check-data
           key: dc-13-${{ runner.os }}-${{ github.run_id }}
